@@ -10,23 +10,12 @@
 <style>
 /* ---------- Design tokens ---------- */
 :root{
-  --bg:#EBE6F0;            /* backdrop behind the device */
-  --surface:#FFFFFF;       /* app surface */
-  --surface-2:#F5F1F8;
-  --ink:#241C2E;           /* near-black aubergine */
-  --ink-soft:#6C6478;
-  --ink-faint:#9A93A6;
-  --line:#E7E1ED;
-  --gold:#D99A2B;          /* marigold — phuang malai / temple gold */
-  --gold-soft:#F7E9C6;
-  --rose:#DE685C;          /* drama / emotion accent */
-  --video:#15111D;         /* video panel (always dark) */
-  --video-ink:#F4EFF8;
-  --sheet-shadow:rgba(36,28,46,.20);
-  /* word-boundary tint palette (light) */
+  --bg:#EBE6F0; --surface:#FFFFFF; --surface-2:#F5F1F8; --ink:#241C2E;
+  --ink-soft:#6C6478; --ink-faint:#9A93A6; --line:#E7E1ED;
+  --gold:#D99A2B; --gold-soft:#F7E9C6; --rose:#DE685C;
+  --video:#15111D; --video-ink:#F4EFF8; --sheet-shadow:rgba(36,28,46,.20);
   --w0:#2FA39B; --w1:#7C6BD8; --w2:#D98A2B; --w3:#D65E79; --w4:#4C9E52; --w5:#3E82C9;
-  --w-alpha:.16;
-  --radius:22px;
+  --w-alpha:.16; --radius:22px;
   --font-display:"Kanit","IBM Plex Sans Thai",system-ui,sans-serif;
   --font-body:"IBM Plex Sans",system-ui,-apple-system,sans-serif;
   --font-thai:"IBM Plex Sans Thai","Kanit",system-ui,sans-serif;
@@ -47,154 +36,125 @@
   --sheet-shadow:rgba(0,0,0,.5); --w-alpha:.26;
   --w0:#3FC4BA; --w1:#9585EA; --w2:#EDB24A; --w3:#EE7C93; --w4:#67C06D; --w5:#5E9EE0;
 }
-
 *{box-sizing:border-box}
 html,body{margin:0}
-body{
-  background:var(--bg);
-  color:var(--ink);
-  font-family:var(--font-body);
-  font-size:15px;
-  line-height:1.5;
-  -webkit-font-smoothing:antialiased;
-  min-height:100vh;
-}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
 img{max-width:100%}
 [hidden]{display:none!important}
 button{font-family:inherit;color:inherit;cursor:pointer}
+input{font-family:inherit}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:8px}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 
 /* ---------- Stage / device ---------- */
-.stage{
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-start;
-  gap:18px;
-  padding:28px 16px 40px;
-}
-.pitch{
-  width:100%;max-width:390px;text-align:center;color:var(--ink-soft);
-}
-.pitch .brand{
-  font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--ink);
-  letter-spacing:.2px;display:inline-flex;align-items:center;gap:8px;
-}
+.stage{min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:18px;padding:28px 16px 40px}
+.pitch{width:100%;max-width:390px;text-align:center;color:var(--ink-soft)}
+.pitch .brand{font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--ink);letter-spacing:.2px;display:inline-flex;align-items:center;gap:8px}
 .pitch .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px var(--gold-soft)}
 .pitch p{margin:6px 0 0;font-size:12.5px;line-height:1.45}
 .pitch .tag{color:var(--gold);font-weight:600}
 
-.device{
-  width:100%;max-width:390px;
-  background:var(--surface);
-  border-radius:44px;
-  padding:12px;
-  box-shadow:0 2px 4px rgba(36,28,46,.08),0 24px 60px -16px var(--sheet-shadow);
-  border:1px solid var(--line);
-  position:relative;
-}
-.screen{
-  position:relative;
-  background:var(--surface);
-  border-radius:34px;
-  overflow:hidden;
-  height:800px;
-  max-height:calc(100vh - 130px);
-  display:flex;flex-direction:column;
-}
-/* status bar */
-.statusbar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:12px 26px 6px;font-family:var(--font-display);font-weight:600;font-size:14px;
-  flex:0 0 auto;
-}
-.statusbar .island{
-  position:absolute;top:12px;left:50%;transform:translateX(-50%);
-  width:96px;height:26px;background:#000;border-radius:16px;
-}
+.device{width:100%;max-width:390px;background:var(--surface);border-radius:44px;padding:12px;box-shadow:0 2px 4px rgba(36,28,46,.08),0 24px 60px -16px var(--sheet-shadow);border:1px solid var(--line);position:relative}
+.screen{position:relative;background:var(--surface);border-radius:34px;overflow:hidden;height:812px;max-height:calc(100vh - 130px);display:flex;flex-direction:column}
+.statusbar{display:flex;align-items:center;justify-content:space-between;padding:12px 26px 6px;font-family:var(--font-display);font-weight:600;font-size:14px;flex:0 0 auto;z-index:3}
+.statusbar .island{position:absolute;top:12px;left:50%;transform:translateX(-50%);width:96px;height:26px;background:#000;border-radius:16px}
 .statusbar .glyphs{display:flex;gap:6px;align-items:center;color:var(--ink)}
 .statusbar .batt{width:22px;height:11px;border:1.5px solid var(--ink);border-radius:3px;position:relative;opacity:.85}
 .statusbar .batt::after{content:"";position:absolute;inset:1.5px;right:6px;background:var(--ink);border-radius:1px}
 .statusbar .batt::before{content:"";position:absolute;right:-3px;top:3px;width:2px;height:5px;background:var(--ink);border-radius:0 1px 1px 0}
 
-/* app header */
-.appbar{
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:4px 16px 10px;flex:0 0 auto;
-}
+.views{flex:1 1 auto;position:relative;overflow:hidden}
+.view{position:absolute;inset:0;display:flex;flex-direction:column}
+
+/* ---------- Home / BaiTube ---------- */
+.homebar{display:flex;align-items:center;gap:10px;padding:4px 16px 8px;flex:0 0 auto}
+.homebar .logo{font-family:var(--font-display);font-weight:700;font-size:19px;display:flex;align-items:center;gap:7px}
+.homebar .logo .mark{width:24px;height:24px;border-radius:8px;background:linear-gradient(150deg,var(--gold),var(--rose));display:grid;place-items:center;color:#fff;font-size:13px}
+.homebar .logo b{color:var(--gold);font-weight:700}
+.homebar .gear{margin-left:auto;background:var(--surface-2);border:none;width:34px;height:34px;border-radius:12px;display:grid;place-items:center;color:var(--ink)}
+.homescroll{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:16px}
+
+.search{margin:2px 14px 0;display:flex;align-items:center;gap:9px;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:11px 13px}
+.search svg{color:var(--ink-faint);flex:0 0 auto}
+.search input{border:none;background:none;outline:none;width:100%;font-size:14.5px;color:var(--ink)}
+.search input::placeholder{color:var(--ink-faint)}
+
+.paste{margin:10px 14px 0;background:linear-gradient(110deg,var(--gold-soft),transparent);border:1px dashed color-mix(in srgb,var(--gold) 40%,transparent);border-radius:14px;padding:11px 12px;display:flex;align-items:center;gap:10px}
+.paste .ic{width:30px;height:30px;border-radius:9px;background:var(--surface);display:grid;place-items:center;color:var(--gold);flex:0 0 auto;border:1px solid color-mix(in srgb,var(--gold) 30%,transparent)}
+.paste .txt{min-width:0;flex:1}
+.paste .txt b{font-family:var(--font-display);font-size:12.5px;font-weight:600;display:block}
+.paste .txt input{border:none;background:none;outline:none;width:100%;font-size:12px;color:var(--ink)}
+.paste .txt input::placeholder{color:var(--ink-faint)}
+.paste .go{border:none;background:var(--gold);color:#231a06;font-family:var(--font-display);font-weight:600;font-size:12px;padding:8px 12px;border-radius:10px;flex:0 0 auto}
+
+.chips{display:flex;gap:8px;overflow-x:auto;padding:14px 14px 4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 13px;font-family:var(--font-display);font-weight:500;font-size:12.5px;color:var(--ink-soft);white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+
+.rowhead{display:flex;align-items:baseline;gap:8px;padding:16px 16px 8px}
+.rowhead h3{margin:0;font-family:var(--font-display);font-weight:600;font-size:15px}
+.rowhead span{font-size:11.5px;color:var(--ink-faint)}
+
+.channels{display:flex;gap:14px;overflow-x:auto;padding:2px 16px 4px;scrollbar-width:none}
+.channels::-webkit-scrollbar{display:none}
+.channel{flex:0 0 auto;width:62px;text-align:center}
+.channel .av{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--font-display);font-weight:700;font-size:15px;margin:0 auto 5px;box-shadow:0 4px 12px -4px var(--sheet-shadow)}
+.channel small{font-size:10.5px;color:var(--ink-soft);line-height:1.2;display:block}
+
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:6px 14px 4px}
+.card{border:none;background:none;padding:0;text-align:left;display:flex;flex-direction:column;gap:7px}
+.thumb{position:relative;aspect-ratio:16/10;border-radius:13px;overflow:hidden;color:#fff}
+.thumb .g{position:absolute;inset:0}
+.thumb .g::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.06) 0 2px,transparent 2px 20px);mix-blend-mode:overlay}
+.thumb .dur{position:absolute;right:6px;bottom:6px;background:rgba(10,8,14,.8);color:#fff;font-size:10px;font-weight:600;padding:2px 6px;border-radius:6px;font-variant-numeric:tabular-nums}
+.thumb .lvl{position:absolute;left:6px;top:6px;background:rgba(10,8,14,.55);backdrop-filter:blur(4px);color:#fff;font-family:var(--font-display);font-weight:700;font-size:10px;padding:2px 7px;border-radius:7px}
+.thumb .subs{position:absolute;left:6px;bottom:6px;font-size:9.5px;font-weight:600;padding:2px 6px;border-radius:6px;display:flex;align-items:center;gap:3px}
+.subs.th{background:rgba(79,158,82,.92);color:#fff}
+.subs.ai{background:rgba(217,138,43,.92);color:#231a06}
+.card .meta{padding:0 2px}
+.card .ti{font-family:var(--font-thai);font-weight:500;font-size:13.5px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card .ch{font-size:11px;color:var(--ink-faint);margin-top:2px}
+.empty{grid-column:1/-1;text-align:center;color:var(--ink-faint);font-size:13px;padding:30px 10px}
+
+/* ---------- Player view ---------- */
+.appbar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 16px 10px;flex:0 0 auto}
 .appbar .chev{background:var(--surface-2);border:none;width:34px;height:34px;border-radius:12px;display:grid;place-items:center;color:var(--ink)}
 .appbar .show{min-width:0;text-align:center;line-height:1.15}
 .appbar .show .t{font-family:var(--font-display);font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .appbar .show .s{font-size:11px;color:var(--ink-faint)}
 .appbar .lvl{background:var(--gold-soft);color:var(--gold);font-family:var(--font-display);font-weight:700;font-size:11px;padding:5px 9px;border-radius:9px;border:1px solid color-mix(in srgb,var(--gold) 30%,transparent)}
-
 .appscroll{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch}
 
-/* ---------- Video panel ---------- */
-.video{
-  position:relative;margin:0 12px;border-radius:18px;overflow:hidden;
-  background:var(--video);aspect-ratio:16/10;color:var(--video-ink);
-  isolation:isolate;
-}
-.video .scene{position:absolute;inset:0;background:
-   radial-gradient(120% 80% at 78% 18%,rgba(233,168,60,.55),transparent 55%),
-   radial-gradient(120% 90% at 12% 92%,rgba(222,104,92,.55),transparent 52%),
-   linear-gradient(160deg,#2a2140,#15111d 70%);
-   transition:opacity .5s}
-.video .scene::after{content:"";position:absolute;inset:0;background:
-   repeating-linear-gradient(115deg,rgba(255,255,255,.05) 0 2px,transparent 2px 22px);
-   mix-blend-mode:overlay}
+.video{position:relative;margin:0 12px;border-radius:18px;overflow:hidden;background:var(--video);aspect-ratio:16/10;color:var(--video-ink);isolation:isolate}
+.video .scene{position:absolute;inset:0;transition:opacity .5s}
+.video .scene::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.05) 0 2px,transparent 2px 22px);mix-blend-mode:overlay}
 .video .yt{position:absolute;top:10px;left:12px;display:flex;align-items:center;gap:6px;font-size:11px;opacity:.85;font-family:var(--font-display)}
 .video .yt .rec{width:8px;height:8px;border-radius:50%;background:#ff5252}
-.video .play{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);
-  width:56px;height:56px;border-radius:50%;border:none;
-  background:rgba(255,255,255,.16);backdrop-filter:blur(6px);
-  color:#fff;display:grid;place-items:center;
-  box-shadow:0 6px 24px rgba(0,0,0,.35);
-}
+.video .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-58%);width:56px;height:56px;border-radius:50%;border:none;background:rgba(255,255,255,.16);backdrop-filter:blur(6px);color:#fff;display:grid;place-items:center;box-shadow:0 6px 24px rgba(0,0,0,.35)}
 .video .play svg{margin-left:3px}
-/* caption over video */
-.video .caption{
-  position:absolute;left:0;right:0;bottom:0;padding:14px 14px 12px;
-  background:linear-gradient(to top,rgba(10,8,14,.86),rgba(10,8,14,.2) 70%,transparent);
-  font-family:var(--font-thai);font-size:17px;font-weight:500;text-align:center;
-  letter-spacing:.3px;
-}
-.video .caption .cap-en{display:block;font-family:var(--font-body);font-size:11.5px;
-  font-weight:400;opacity:.72;margin-top:3px;letter-spacing:0}
-/* progress */
+.video .caption{position:absolute;left:0;right:0;bottom:0;padding:14px 14px 12px;background:linear-gradient(to top,rgba(10,8,14,.86),rgba(10,8,14,.2) 70%,transparent);font-family:var(--font-thai);font-size:17px;font-weight:500;text-align:center;letter-spacing:.3px}
+.video .caption .cap-en{display:block;font-family:var(--font-body);font-size:11.5px;font-weight:400;opacity:.72;margin-top:3px;letter-spacing:0}
 .video .bar{position:absolute;left:12px;right:12px;bottom:6px;height:3px;border-radius:2px;background:rgba(255,255,255,.25)}
 .video .bar>i{display:block;height:100%;width:14%;border-radius:2px;background:var(--gold)}
 
-/* transport controls */
+.subsource{margin:10px 12px 0;display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink-soft);background:var(--surface-2);border:1px solid var(--line);border-radius:11px;padding:8px 11px}
+.subsource .tagd{font-family:var(--font-display);font-weight:600;font-size:10px;padding:2px 7px;border-radius:6px}
+.subsource .tagd.th{background:color-mix(in srgb,var(--w4) 18%,transparent);color:var(--w4)}
+.subsource .tagd.ai{background:var(--gold-soft);color:var(--gold)}
+
 .transport{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px 12px 4px}
-.transport button{
-  border:1px solid var(--line);background:var(--surface);border-radius:12px;
-  height:38px;padding:0 12px;display:inline-flex;align-items:center;gap:7px;
-  font-family:var(--font-display);font-weight:500;font-size:12.5px;color:var(--ink);
-}
+.transport button{border:1px solid var(--line);background:var(--surface);border-radius:12px;height:38px;padding:0 12px;display:inline-flex;align-items:center;gap:7px;font-family:var(--font-display);font-weight:500;font-size:12.5px;color:var(--ink)}
 .transport button.primary{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 .transport .spacer{flex:1}
 .toggle[aria-pressed="true"]{background:var(--gold-soft);border-color:color-mix(in srgb,var(--gold) 34%,transparent);color:var(--gold)}
 
-/* ---------- Reader (the hero) ---------- */
 .reader{margin:10px 12px 0;padding:16px 14px 18px;background:var(--surface-2);border-radius:18px;border:1px solid var(--line)}
 .reader .kicker{display:flex;align-items:center;gap:8px;font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px}
 .reader .kicker .hint{margin-left:auto;text-transform:none;letter-spacing:0;font-weight:500;color:var(--gold);font-size:11px}
-.line{
-  font-family:var(--font-thai);font-weight:500;font-size:32px;line-height:1.9;
-  text-align:center;word-break:break-word;
-}
-.tok{
-  position:relative;border-radius:9px;padding:2px 1px;
-  transition:background .16s ease,color .16s ease,transform .12s ease;
-  cursor:pointer;
-}
+.line{font-family:var(--font-thai);font-weight:500;font-size:32px;line-height:1.9;text-align:center;word-break:break-word}
+.tok{position:relative;border-radius:9px;padding:2px 1px;transition:background .16s,color .16s,transform .12s;cursor:pointer;border:none;background:none;font:inherit;color:inherit}
 .tok:hover,.tok:focus-visible{transform:translateY(-1px)}
-/* reveal boundaries: on line hover OR when toggle on */
 .line.reveal .tok,.line:hover .tok{padding:2px 5px}
 .line.reveal .tok[data-c="0"],.line:hover .tok[data-c="0"]{background:color-mix(in srgb,var(--w0) calc(var(--w-alpha)*100%),transparent);color:var(--w0)}
 .line.reveal .tok[data-c="1"],.line:hover .tok[data-c="1"]{background:color-mix(in srgb,var(--w1) calc(var(--w-alpha)*100%),transparent);color:var(--w1)}
@@ -202,75 +162,56 @@ button{font-family:inherit;color:inherit;cursor:pointer}
 .line.reveal .tok[data-c="3"],.line:hover .tok[data-c="3"]{background:color-mix(in srgb,var(--w3) calc(var(--w-alpha)*100%),transparent);color:var(--w3)}
 .line.reveal .tok[data-c="4"],.line:hover .tok[data-c="4"]{background:color-mix(in srgb,var(--w4) calc(var(--w-alpha)*100%),transparent);color:var(--w4)}
 .line.reveal .tok[data-c="5"],.line:hover .tok[data-c="5"]{background:color-mix(in srgb,var(--w5) calc(var(--w-alpha)*100%),transparent);color:var(--w5)}
-/* individual hover pops stronger */
 .tok:hover{outline:1.5px solid currentColor;outline-offset:0}
 .tok.active{background:var(--ink)!important;color:var(--surface)!important}
-.reader .trans{
-  margin-top:12px;text-align:center;color:var(--ink-soft);font-size:14px;
-  padding-top:12px;border-top:1px dashed var(--line);
-}
+.reader .trans{margin-top:12px;text-align:center;color:var(--ink-soft);font-size:14px;padding-top:12px;border-top:1px dashed var(--line)}
 .reader .trans.hidden-t{filter:blur(5px);opacity:.6;user-select:none}
 .reader .trans small{display:block;font-size:10.5px;color:var(--ink-faint);margin-top:2px;text-transform:uppercase;letter-spacing:.08em;filter:none}
 
-/* saved chip row */
 .savedrow{display:flex;align-items:center;gap:8px;padding:14px 14px 6px;color:var(--ink-soft);font-size:12.5px}
 .savedrow .pill{margin-left:auto;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:5px 11px;font-family:var(--font-display);font-weight:600;font-size:12px;color:var(--ink);display:inline-flex;gap:6px;align-items:center}
 .savedrow .pill b{color:var(--gold)}
-
 .legend{padding:2px 14px 22px;color:var(--ink-faint);font-size:11px;text-align:center;line-height:1.5}
 
-/* ---------- Bottom sheet (dictionary entry) ---------- */
+/* processing overlay for paste-link */
+.proc{position:absolute;inset:0;z-index:7;background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(3px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;opacity:0;pointer-events:none;transition:opacity .2s;text-align:center;padding:0 34px}
+.proc.on{opacity:1;pointer-events:auto}
+.proc .spin{width:42px;height:42px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--gold);animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.proc .msg{font-family:var(--font-display);font-weight:600;font-size:14px}
+.proc small{color:var(--ink-faint);font-size:11.5px}
+
+/* ---------- Bottom sheet ---------- */
 .scrim{position:absolute;inset:0;background:rgba(20,15,26,.34);opacity:0;pointer-events:none;transition:opacity .25s;z-index:5}
 .scrim.open{opacity:1;pointer-events:auto}
-.sheet{
-  position:absolute;left:0;right:0;bottom:0;z-index:6;
-  background:var(--surface);border-radius:26px 26px 0 0;
-  border-top:1px solid var(--line);
-  box-shadow:0 -18px 50px -12px var(--sheet-shadow);
-  transform:translateY(102%);transition:transform .32s cubic-bezier(.22,1,.36,1);
-  padding:8px 18px calc(20px + env(safe-area-inset-bottom));
-  max-height:82%;overflow-y:auto;
-}
+.sheet{position:absolute;left:0;right:0;bottom:0;z-index:6;background:var(--surface);border-radius:26px 26px 0 0;border-top:1px solid var(--line);box-shadow:0 -18px 50px -12px var(--sheet-shadow);transform:translateY(102%);transition:transform .32s cubic-bezier(.22,1,.36,1);padding:8px 18px 24px;max-height:82%;overflow-y:auto}
 .sheet.open{transform:translateY(0)}
 .sheet .grip{width:38px;height:5px;border-radius:3px;background:var(--line);margin:6px auto 14px}
 .sheet .head{display:flex;align-items:flex-start;gap:12px}
 .sheet .word{font-family:var(--font-thai);font-weight:600;font-size:34px;line-height:1.1}
 .sheet .roman{color:var(--ink-soft);font-size:14px;margin-top:2px}
 .sheet .roman b{color:var(--gold);font-weight:600}
-.sheet .speak{
-  margin-left:auto;flex:0 0 auto;width:44px;height:44px;border-radius:14px;border:none;
-  background:var(--gold);color:#231a06;display:grid;place-items:center;
-  box-shadow:0 6px 16px -6px var(--gold);
-}
+.sheet .speak{margin-left:auto;flex:0 0 auto;width:44px;height:44px;border-radius:14px;border:none;background:var(--gold);color:#231a06;display:grid;place-items:center;box-shadow:0 6px 16px -6px var(--gold)}
 .sheet .pos{display:inline-block;margin-top:14px;font-family:var(--font-display);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--rose);background:color-mix(in srgb,var(--rose) 12%,transparent);padding:4px 9px;border-radius:8px}
 .sheet .mean{font-size:20px;font-weight:500;margin:10px 0 0;font-family:var(--font-display)}
 .sheet .note{color:var(--ink-soft);font-size:13.5px;margin:8px 0 0}
 .sheet .note:empty{display:none}
-
-.ai{
-  margin-top:16px;border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);
-  border-radius:14px;overflow:hidden;background:var(--surface);
-}
-.ai .ai-btn{
-  width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;border:none;
-  background:linear-gradient(100deg,var(--gold-soft),transparent);text-align:left;
-}
+.ai{margin-top:16px;border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);border-radius:14px;overflow:hidden;background:var(--surface)}
+.ai .ai-btn{width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;border:none;background:linear-gradient(100deg,var(--gold-soft),transparent);text-align:left}
 .ai .ai-btn .spark{width:26px;height:26px;border-radius:8px;background:var(--gold);color:#231a06;display:grid;place-items:center;flex:0 0 auto}
 .ai .ai-btn .lab{font-family:var(--font-display);font-weight:600;font-size:13px}
 .ai .ai-btn .lab small{display:block;font-weight:400;color:var(--ink-soft);font-size:11px}
 .ai .ai-btn .caret{margin-left:auto;transition:transform .2s;color:var(--ink-faint)}
 .ai[data-open="true"] .ai-btn .caret{transform:rotate(180deg)}
-.ai .ai-body{padding:0 14px;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .3s ease;font-size:13.5px;color:var(--ink-soft);line-height:1.6}
-.ai[data-open="true"] .ai-body{max-height:340px;padding:2px 14px 14px}
+.ai .ai-body{padding:0 14px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+.ai[data-open="true"] .ai-body{max-height:360px;padding:2px 14px 14px}
 .ai .ai-body .demo{display:inline-block;margin-bottom:6px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint)}
-
 .sheet .actions{display:flex;gap:10px;margin-top:16px}
 .sheet .actions button{flex:1;height:46px;border-radius:13px;font-family:var(--font-display);font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
 .sheet .save{background:var(--ink);color:var(--surface);border:none}
 .sheet .save.saved{background:var(--gold-soft);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 34%,transparent)}
 .sheet .dict{background:var(--surface);border:1px solid var(--line);color:var(--ink)}
 
-/* wide screens: two-column framing note beside device */
 @media (max-width:479px){
   .stage{padding:0;gap:0}
   .pitch{display:none}
@@ -283,12 +224,11 @@ button{font-family:inherit;color:inherit;cursor:pointer}
 <div class="stage">
   <div class="pitch">
     <div class="brand"><span class="dot"></span>Bai · ใบ</div>
-    <p>Prototipo de la función estrella: <span class="tag">toca cualquier palabra</span> de un subtítulo tailandés escrito sin espacios. Pasa el cursor por la frase para ver los límites de cada palabra en colores.</p>
+    <p><span class="tag">BaiTube</span>: busca vídeos tailandeses (o pega un enlace) y ábrelos con subtítulos interactivos. Toca cualquier palabra; pasa el cursor por la frase para ver los cortes en colores.</p>
   </div>
 
   <div class="device">
     <div class="screen" id="screen">
-      <!-- status bar -->
       <div class="statusbar">
         <span>9:41</span>
         <div class="island"></div>
@@ -299,93 +239,108 @@ button{font-family:inherit;color:inherit;cursor:pointer}
         </span>
       </div>
 
-      <!-- app bar -->
-      <div class="appbar">
-        <button class="chev" aria-label="Atrás">
-          <svg width="10" height="16" viewBox="0 0 10 16" fill="none"><path d="M8 1 2 8l6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <div class="show">
-          <div class="t">รักนะเทวดา · Love You</div>
-          <div class="s">Lakorn · ตอนที่ 3</div>
-        </div>
-        <span class="lvl">A2</span>
-      </div>
-
-      <div class="appscroll">
-        <!-- video -->
-        <div class="video">
-          <div class="scene" id="scene"></div>
-          <div class="yt"><span class="rec"></span> YouTube · GMMTV (embed)</div>
-          <button class="play" id="playBtn" aria-label="Reproducir">
-            <svg width="20" height="22" viewBox="0 0 20 22" fill="currentColor"><path d="M2 2.2c0-.9 1-1.5 1.8-1L18 9.3c.8.5.8 1.6 0 2.1L3.8 20.8c-.8.5-1.8-.1-1.8-1z"/></svg>
-          </button>
-          <div class="caption" id="caption"></div>
-          <div class="bar"><i id="progress"></i></div>
-        </div>
-
-        <!-- transport -->
-        <div class="transport">
-          <button id="prevBtn" aria-label="Línea anterior">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M12 1 5 7l7 6zM3 1h2v12H3z"/></svg>
-          </button>
-          <button class="primary" id="repeatBtn">↻ Repetir línea</button>
-          <button id="nextBtn" aria-label="Línea siguiente">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M2 1l7 6-7 6zM9 1h2v12H9z"/></svg>
-          </button>
-          <span class="spacer"></span>
-          <button class="toggle" id="breakBtn" aria-pressed="false" title="Mostrar límites de palabra">แยกคำ</button>
-        </div>
-
-        <!-- reader: the hero -->
-        <div class="reader">
-          <div class="kicker">Línea actual
-            <span class="hint" id="hintText">✦ pasa el cursor o toca una palabra</span>
+      <div class="views">
+        <!-- ============ HOME / BaiTube ============ -->
+        <section class="view" id="homeView">
+          <div class="homebar">
+            <div class="logo"><span class="mark">ใบ</span>Bai<b>Tube</b></div>
+            <button class="gear" aria-label="Ajustes">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="2.4" stroke="currentColor" stroke-width="1.6"/><path d="M9 1.5v2M9 14.5v2M1.5 9h2M14.5 9h2M3.6 3.6l1.4 1.4M13 13l1.4 1.4M14.4 3.6 13 5M5 13l-1.4 1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </button>
           </div>
-          <div class="line" id="line" role="group" aria-label="Frase en tailandés, toca una palabra"></div>
-          <div class="trans hidden-t" id="trans"></div>
-        </div>
 
-        <div class="savedrow">
-          Vocabulario que vas guardando
-          <span class="pill">★ <b id="savedCount">0</b> palabras</span>
-        </div>
+          <div class="homescroll">
+            <div class="search">
+              <svg width="17" height="17" viewBox="0 0 17 17" fill="none"><circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.7"/><path d="m12 12 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              <input id="searchInput" type="search" placeholder="Busca canales o vídeos… p. ej. GMMTV" aria-label="Buscar">
+            </div>
 
-        <div class="legend">
-          El texto se muestra tal como se lee en tailandés — <b>sin espacios</b>.<br>
-          La app conoce los cortes por debajo y te los revela al pasar el cursor.
-        </div>
+            <div class="paste">
+              <span class="ic" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 10 10 6M5.5 3.5 7 2a3 3 0 0 1 4 4l-1.5 1.5M10.5 12.5 9 14a3 3 0 0 1-4-4l1.5-1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+              </span>
+              <span class="txt">
+                <b>Pega un enlace de YouTube</b>
+                <input id="pasteInput" type="url" placeholder="https://youtube.com/watch?v=…" aria-label="Enlace de YouTube">
+              </span>
+              <button class="go" id="pasteGo">Abrir</button>
+            </div>
+
+            <div class="chips" id="chips" role="tablist"></div>
+
+            <div class="rowhead"><h3>Canales en tailandés</h3></div>
+            <div class="channels" id="channels"></div>
+
+            <div class="rowhead"><h3>Para ti</h3><span>solo contenido en tailandés 🇹🇭</span></div>
+            <div class="grid" id="grid"></div>
+          </div>
+        </section>
+
+        <!-- ============ PLAYER ============ -->
+        <section class="view" id="playerView" hidden>
+          <div class="appbar">
+            <button class="chev" id="backBtn" aria-label="Volver">
+              <svg width="10" height="16" viewBox="0 0 10 16" fill="none"><path d="M8 1 2 8l6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="show"><div class="t" id="showTitle"></div><div class="s" id="showSub"></div></div>
+            <span class="lvl" id="showLvl">A2</span>
+          </div>
+
+          <div class="appscroll">
+            <div class="video">
+              <div class="scene" id="scene"></div>
+              <div class="yt"><span class="rec"></span> YouTube · <span id="ytChannel">GMMTV</span> (embed)</div>
+              <button class="play" id="playBtn" aria-label="Reproducir">
+                <svg width="20" height="22" viewBox="0 0 20 22" fill="currentColor"><path d="M2 2.2c0-.9 1-1.5 1.8-1L18 9.3c.8.5.8 1.6 0 2.1L3.8 20.8c-.8.5-1.8-.1-1.8-1z"/></svg>
+              </button>
+              <div class="caption" id="caption"></div>
+              <div class="bar"><i id="progress"></i></div>
+            </div>
+
+            <div class="subsource" id="subsource"></div>
+
+            <div class="transport">
+              <button id="prevBtn" aria-label="Línea anterior"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M12 1 5 7l7 6zM3 1h2v12H3z"/></svg></button>
+              <button class="primary" id="repeatBtn">↻ Repetir línea</button>
+              <button id="nextBtn" aria-label="Línea siguiente"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M2 1l7 6-7 6zM9 1h2v12H9z"/></svg></button>
+              <span class="spacer"></span>
+              <button class="toggle" id="breakBtn" aria-pressed="false" title="Mostrar límites de palabra">แยกคำ</button>
+            </div>
+
+            <div class="reader">
+              <div class="kicker">Línea actual<span class="hint" id="hintText">✦ pasa el cursor o toca una palabra</span></div>
+              <div class="line" id="line" role="group" aria-label="Frase en tailandés, toca una palabra"></div>
+              <div class="trans hidden-t" id="trans"></div>
+            </div>
+
+            <div class="savedrow">Vocabulario que vas guardando<span class="pill">★ <b id="savedCount">0</b> palabras</span></div>
+            <div class="legend">El texto se muestra tal como se lee en tailandés — <b>sin espacios</b>.<br>La app conoce los cortes por debajo y te los revela al pasar el cursor.</div>
+          </div>
+        </section>
       </div>
+
+      <!-- processing overlay -->
+      <div class="proc" id="proc"><div class="spin"></div><div class="msg" id="procMsg">Preparando subtítulos…</div><small id="procSub">Este vídeo no tenía subtítulos, la IA los está generando</small></div>
 
       <!-- bottom sheet -->
       <div class="scrim" id="scrim"></div>
       <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Definición">
         <div class="grip"></div>
         <div class="head">
-          <div>
-            <div class="word" id="sWord"></div>
-            <div class="roman" id="sRoman"></div>
-          </div>
-          <button class="speak" id="speakBtn" aria-label="Escuchar pronunciación">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M3 7h3l4-3v12l-4-3H3z"/><path d="M13 6a5 5 0 0 1 0 8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-          </button>
+          <div><div class="word" id="sWord"></div><div class="roman" id="sRoman"></div></div>
+          <button class="speak" id="speakBtn" aria-label="Escuchar pronunciación"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M3 7h3l4-3v12l-4-3H3z"/><path d="M13 6a5 5 0 0 1 0 8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
         </div>
         <span class="pos" id="sPos"></span>
         <p class="mean" id="sMean"></p>
         <p class="note" id="sNote"></p>
-
         <div class="ai" id="aiBox" data-open="false">
           <button class="ai-btn" id="aiBtn">
-            <span class="spark">
-              <svg width="15" height="15" viewBox="0 0 15 15" fill="currentColor"><path d="M7.5 0l1.6 4.4L13.5 6 9.1 7.6 7.5 12 5.9 7.6 1.5 6l4.4-1.6z"/></svg>
-            </span>
+            <span class="spark"><svg width="15" height="15" viewBox="0 0 15 15" fill="currentColor"><path d="M7.5 0l1.6 4.4L13.5 6 9.1 7.6 7.5 12 5.9 7.6 1.5 6l4.4-1.6z"/></svg></span>
             <span class="lab">Explícamelo en contexto<small>Cómo funciona esta palabra en la frase</small></span>
-            <span class="caret">
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </span>
+            <span class="caret"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </button>
           <div class="ai-body"><span class="demo">✦ ejemplo de explicación IA</span><span id="aiText"></span></div>
         </div>
-
         <div class="actions">
           <button class="save" id="saveBtn">★ Guardar palabra</button>
           <button class="dict" id="dictBtn">Diccionario</button>
@@ -396,73 +351,159 @@ button{font-family:inherit;color:inherit;cursor:pointer}
 </div>
 
 <script>
-/* ---------- Prototype data (hand-tokenised Thai lines) ---------- */
+/* ---------- catalogue (mock) ---------- */
+const CHANNELS = [
+  {n:"GMMTV", c:"linear-gradient(150deg,#7C6BD8,#DE685C)"},
+  {n:"ช่อง3", c:"linear-gradient(150deg,#3E82C9,#2FA39B)"},
+  {n:"Point of View", c:"linear-gradient(150deg,#D99A2B,#DE685C)"},
+  {n:"ThaiPod", c:"linear-gradient(150deg,#4C9E52,#2FA39B)"},
+  {n:"GMM", c:"linear-gradient(150deg,#D65E79,#7C6BD8)"}
+];
+const CATS = ["Todos","ละคร Lakorn","วาย BL","Vlogs","เพลง Música","พอดแคสต์ Podcast"];
+const VIDEOS = [
+  {ti:"รักออกอากาศ — On Air", ch:"GMMTV", cat:"วาย BL", lvl:"A2", dur:"45:02", subs:"th", g:"linear-gradient(160deg,#2a2140,#15111d)"},
+  {ti:"บ้านเราสองคน (ละครรัก)", ch:"ช่อง3", cat:"ละคร Lakorn", lvl:"B1", dur:"51:20", subs:"ai", g:"linear-gradient(160deg,#233a44,#111a1d)"},
+  {ti:"เที่ยวเชียงใหม่ 3 วัน ทำอะไรดี", ch:"Point of View", cat:"Vlogs", lvl:"A1", dur:"14:58", subs:"th", g:"linear-gradient(160deg,#3a2b17,#1a140b)"},
+  {ti:"ทำอาหารไทยง่ายๆ ที่บ้าน", ch:"Point of View", cat:"Vlogs", lvl:"A2", dur:"9:33", subs:"ai", g:"linear-gradient(160deg,#2c3a1f,#131a0d)"},
+  {ti:"เพลงรักเก่าๆ ฟังสบาย", ch:"GMM", cat:"เพลง Música", lvl:"A2", dur:"4:12", subs:"th", g:"linear-gradient(160deg,#3a2138,#1a111d)"},
+  {ti:"พอดแคสต์ภาษาไทย EP.12", ch:"ThaiPod", cat:"พอดแคสต์ Podcast", lvl:"B1", dur:"28:40", subs:"ai", g:"linear-gradient(160deg,#1f2f3a,#0d151a)"},
+  {ti:"ละครสั้น: วันสุดท้ายของเรา", ch:"GMMTV", cat:"ละคร Lakorn", lvl:"A2", dur:"12:05", subs:"th", g:"linear-gradient(160deg,#3a2140,#1a111d)"},
+  {ti:"สัมภาษณ์นักแสดงวัยรุ่น", ch:"GMMTV", cat:"Vlogs", lvl:"B1", dur:"18:22", subs:"ai", g:"linear-gradient(160deg,#233a2f,#111a15)"}
+];
+
+/* ---------- lines used by the player (mock, hand-tokenised) ---------- */
 const LINES = [
-  {
-    en:"I've liked you for a long time.",
-    scene:"linear-gradient(160deg,#2a2140,#15111d 70%)",
-    ai:"Palabra por palabra: “yo” + “gustar” + “tú”, y luego มานานแล้ว = “desde hace mucho, ya”. Aquí มา no es el verbo “venir”: apilado con นาน…แล้ว convierte el gustar en algo que empezó hace tiempo y sigue siendo verdad ahora. Una frase de confesión típica de lakorn.",
-    tokens:[
-      {th:"ฉัน",roman:"chǎn",tone:"tono ascendente",pos:"pronombre",en:"yo / a mí",note:"Primera persona muy común, algo suave pero de uso general."},
-      {th:"ชอบ",roman:"chɔ̂ɔp",tone:"tono descendente",pos:"verbo",en:"gustar",note:"El verbo central. Aquí lleva el peso de la confesión: “me gustas”."},
-      {th:"เธอ",roman:"thəə",tone:"tono medio",pos:"pronombre",en:"tú",note:"“Tú” afectivo/íntimo, típico entre personas cercanas y en canciones."},
-      {th:"มา",roman:"maa",tone:"tono medio",pos:"aspecto",en:"desde (hasta ahora)",note:"Aquí NO es “venir”: marca una acción que continúa hasta el presente."},
-      {th:"นาน",roman:"naan",tone:"tono medio",pos:"adverbio",en:"mucho tiempo",note:""},
-      {th:"แล้ว",roman:"lɛ́ɛw",tone:"tono alto",pos:"partícula",en:"ya",note:"Indica que el estado ya es verdad: “desde hace mucho ya”."}
-    ]
-  },
-  {
-    en:"Where are you going?",
-    scene:"linear-gradient(160deg,#233a44,#111a1d 70%)",
-    ai:"Fíjate en el orden: la palabra interrogativa ไหน (“dónde”) va al FINAL, no al principio. Literalmente “Tú vas dónde?”. El tailandés mantiene el orden normal y coloca la palabra de pregunta donde iría la respuesta.",
-    tokens:[
-      {th:"เธอ",roman:"thəə",tone:"tono medio",pos:"pronombre",en:"tú",note:""},
-      {th:"จะ",roman:"jà",tone:"tono bajo",pos:"auxiliar",en:"(futuro) ir a",note:"Marca futuro o intención."},
-      {th:"ไป",roman:"pai",tone:"tono medio",pos:"verbo",en:"ir",note:""},
-      {th:"ไหน",roman:"nǎi",tone:"tono ascendente",pos:"interrogativo",en:"dónde / cuál",note:"La palabra de pregunta va al final, al revés que en español."}
-    ]
-  },
-  {
-    en:"Please don't cry.",
-    scene:"linear-gradient(160deg,#3a2138,#1a111d 70%)",
-    ai:"ร้องไห้ es UNA sola palabra (“llorar”) aunque tenga dos sílabas — justo el caso en que separar por sílabas fallaría y la app debe mantenerla unida. เลย…นะ al final convierten un seco “no llores” en un cariñoso “no llores, ¿vale?”.",
-    tokens:[
-      {th:"อย่า",roman:"yàa",tone:"tono bajo",pos:"auxiliar",en:"no (prohibición)",note:"Se usa para decirle a alguien que no haga algo."},
-      {th:"ร้องไห้",roman:"rɔ́ɔng-hâi",tone:"alto-descendente",pos:"verbo",en:"llorar",note:"Una palabra de dos sílabas: ejemplo perfecto de por qué separar por sílaba rompería el sentido."},
-      {th:"เลย",roman:"ləəi",tone:"tono medio",pos:"partícula",en:"(suaviza / “en absoluto”)",note:"Aquí suaviza la orden y le da calidez."},
-      {th:"นะ",roman:"ná",tone:"tono alto",pos:"partícula",en:"(“¿vale?” amable)",note:"Partícula final amistosa: lo vuelve cariñoso en vez de una orden."}
-    ]
-  }
+  {en:"I've liked you for a long time.", scene:"linear-gradient(160deg,#2a2140,#15111d 70%)",
+   ai:"Palabra por palabra: “yo” + “gustar” + “tú”, y luego มานานแล้ว = “desde hace mucho, ya”. Aquí มา no es el verbo “venir”: apilado con นาน…แล้ว convierte el gustar en algo que empezó hace tiempo y sigue siendo verdad ahora.",
+   tokens:[
+    {th:"ฉัน",roman:"chǎn",tone:"tono ascendente",pos:"pronombre",en:"yo / a mí",note:"Primera persona muy común."},
+    {th:"ชอบ",roman:"chɔ̂ɔp",tone:"tono descendente",pos:"verbo",en:"gustar",note:"El verbo central: “me gustas”."},
+    {th:"เธอ",roman:"thəə",tone:"tono medio",pos:"pronombre",en:"tú",note:"“Tú” afectivo, típico en canciones y parejas."},
+    {th:"มา",roman:"maa",tone:"tono medio",pos:"aspecto",en:"desde (hasta ahora)",note:"Aquí NO es “venir”: marca acción que sigue hasta el presente."},
+    {th:"นาน",roman:"naan",tone:"tono medio",pos:"adverbio",en:"mucho tiempo",note:""},
+    {th:"แล้ว",roman:"lɛ́ɛw",tone:"tono alto",pos:"partícula",en:"ya",note:"El estado ya es verdad."}
+   ]},
+  {en:"Where are you going?", scene:"linear-gradient(160deg,#233a44,#111a1d 70%)",
+   ai:"Fíjate en el orden: la palabra interrogativa ไหน (“dónde”) va al FINAL. Literalmente “Tú vas dónde?”.",
+   tokens:[
+    {th:"เธอ",roman:"thəə",tone:"tono medio",pos:"pronombre",en:"tú",note:""},
+    {th:"จะ",roman:"jà",tone:"tono bajo",pos:"auxiliar",en:"(futuro) ir a",note:"Marca futuro / intención."},
+    {th:"ไป",roman:"pai",tone:"tono medio",pos:"verbo",en:"ir",note:""},
+    {th:"ไหน",roman:"nǎi",tone:"tono ascendente",pos:"interrogativo",en:"dónde / cuál",note:"La pregunta va al final."}
+   ]},
+  {en:"Please don't cry.", scene:"linear-gradient(160deg,#3a2138,#1a111d 70%)",
+   ai:"ร้องไห้ es UNA sola palabra (“llorar”), aunque tenga dos sílabas — no se parte en ร้อง + ไห้. เลย…นะ al final vuelven cariñoso un seco “no llores”.",
+   tokens:[
+    {th:"อย่า",roman:"yàa",tone:"tono bajo",pos:"auxiliar",en:"no (prohibición)",note:"Para decir a alguien que no haga algo."},
+    {th:"ร้องไห้",roman:"rɔ́ɔng-hâi",tone:"alto-descendente",pos:"verbo",en:"llorar",note:"Una sola palabra de dos sílabas: se mantiene unida."},
+    {th:"เลย",roman:"ləəi",tone:"tono medio",pos:"partícula",en:"(suaviza)",note:"Suaviza la orden, añade calidez."},
+    {th:"นะ",roman:"ná",tone:"tono alto",pos:"partícula",en:"(“¿vale?” amable)",note:"Partícula final amistosa."}
+   ]}
 ];
 
 const $ = s => document.querySelector(s);
-const lineEl=$('#line'), transEl=$('#trans'), capEl=$('#caption'), sceneEl=$('#scene');
-let idx=0, breaks=false, current=null;
+const homeView=$('#homeView'), playerView=$('#playerView');
+let idx=0, breaks=false, current=null, cat="Todos";
 const saved = loadSaved();
-
 function loadSaved(){ try{ return new Set(JSON.parse(localStorage.getItem('bai_saved')||'[]')); }catch(e){ return new Set(); } }
 function persist(){ try{ localStorage.setItem('bai_saved',JSON.stringify([...saved])); }catch(e){} }
 $('#savedCount').textContent = saved.size;
 
+/* ---------- home rendering ---------- */
+function renderChips(){
+  const c=$('#chips'); c.innerHTML='';
+  CATS.forEach(k=>{
+    const b=document.createElement('button');
+    b.className='chip'; b.textContent=k; b.setAttribute('aria-pressed', k===cat);
+    b.addEventListener('click',()=>{cat=k; renderChips(); renderGrid();});
+    c.appendChild(b);
+  });
+}
+function renderChannels(){
+  const c=$('#channels'); c.innerHTML='';
+  CHANNELS.forEach(ch=>{
+    const d=document.createElement('button'); d.className='channel'; d.type='button';
+    d.innerHTML='<span class="av" style="background:'+ch.c+'">'+ch.n.slice(0,2)+'</span><small>'+ch.n+'</small>';
+    d.addEventListener('click',()=>{ $('#searchInput').value=ch.n; renderGrid(); });
+    c.appendChild(d);
+  });
+}
+function renderGrid(){
+  const q=($('#searchInput').value||'').toLowerCase().trim();
+  const g=$('#grid'); g.innerHTML='';
+  const list=VIDEOS.filter(v=>{
+    const okCat = cat==="Todos" || v.cat===cat;
+    const okQ = !q || v.ti.toLowerCase().includes(q) || v.ch.toLowerCase().includes(q) || v.cat.toLowerCase().includes(q);
+    return okCat && okQ;
+  });
+  if(!list.length){ g.innerHTML='<div class="empty">Sin resultados. Prueba con "GMMTV", "vlog" o pega un enlace arriba.</div>'; return; }
+  list.forEach(v=>{
+    const b=document.createElement('button'); b.className='card'; b.type='button';
+    const subsTag = v.subs==='th'
+      ? '<span class="subs th">✓ subtítulos TH</span>'
+      : '<span class="subs ai">✦ subs IA</span>';
+    b.innerHTML =
+      '<div class="thumb"><div class="g" style="background:'+v.g+'"></div>'+
+      '<span class="lvl">'+v.lvl+'</span>'+subsTag+
+      '<span class="dur">'+v.dur+'</span></div>'+
+      '<div class="meta"><div class="ti">'+v.ti+'</div><div class="ch">'+v.ch+' · '+v.cat+'</div></div>';
+    b.addEventListener('click',()=>openPlayer(v));
+    g.appendChild(b);
+  });
+}
+
+/* ---------- navigation ---------- */
+function showView(which){
+  homeView.hidden = which!=='home';
+  playerView.hidden = which!=='player';
+}
+function openPlayer(v){
+  $('#showTitle').textContent=v.ti;
+  $('#showSub').textContent=v.ch+' · '+v.cat;
+  $('#showLvl').textContent=v.lvl;
+  $('#ytChannel').textContent=v.ch;
+  $('#subsource').innerHTML = v.subs==='th'
+    ? '<span class="tagd th">SUBTÍTULOS TH</span> Este vídeo ya traía subtítulos tailandeses → instantáneo y gratis.'
+    : '<span class="tagd ai">SUBS IA</span> Subtítulos generados por IA (una vez) y guardados en caché → gratis a partir de ahora.';
+  idx=0; closeSheet(); renderLine();
+  showView('player');
+  $('#playerView .appscroll').scrollTop=0;
+}
+$('#backBtn').addEventListener('click',()=>showView('home'));
+
+/* paste link → simulate processing then open a generated video */
+$('#pasteGo').addEventListener('click',()=>{
+  const url=($('#pasteInput').value||'').trim();
+  const proc=$('#proc');
+  const hasSubs = Math.random()>.5;
+  $('#procMsg').textContent = hasSubs? 'Cargando subtítulos…' : 'Preparando subtítulos…';
+  $('#procSub').textContent = hasSubs? 'El vídeo ya tenía subtítulos tailandeses' : 'Vídeo nuevo: la IA transcribe el principio y ya puedes empezar';
+  proc.classList.add('on');
+  setTimeout(()=>{
+    proc.classList.remove('on');
+    openPlayer({ti: url? 'Vídeo pegado' : 'Vídeo de ejemplo', ch:'YouTube', cat:'Enlace', lvl:'A2', dur:'—',
+                subs: hasSubs?'th':'ai', g:'linear-gradient(160deg,#243a2f,#111a15)'});
+  }, hasSubs?900:1800);
+});
+
+/* ---------- player: line rendering ---------- */
+const lineEl=$('#line'), transEl=$('#trans'), capEl=$('#caption'), sceneEl=$('#scene');
 function renderLine(){
-  const L = LINES[idx];
+  const L=LINES[idx];
   lineEl.innerHTML=''; lineEl.classList.toggle('reveal',breaks);
   L.tokens.forEach((t,i)=>{
     const b=document.createElement('button');
-    b.className='tok'; b.dataset.c=i%6; b.dataset.i=i; b.type='button';
-    b.textContent=t.th; b.setAttribute('aria-label',t.th+', '+t.en);
+    b.className='tok'; b.dataset.c=i%6; b.type='button'; b.textContent=t.th;
+    b.setAttribute('aria-label',t.th+', '+t.en);
     b.addEventListener('click',()=>openSheet(i,b));
     lineEl.appendChild(b);
   });
-  // caption over the video (static reference copy of the same line)
-  capEl.innerHTML = L.tokens.map(t=>t.th).join('') +
-    '<span class="cap-en">'+L.en+'</span>';
+  capEl.innerHTML = L.tokens.map(t=>t.th).join('') + '<span class="cap-en">'+L.en+'</span>';
   transEl.innerHTML = L.en + '<small>traducción</small>';
   sceneEl.style.background = L.scene +
     ',radial-gradient(120% 80% at 78% 18%,rgba(233,168,60,.5),transparent 55%)'+
     ',radial-gradient(120% 90% at 12% 92%,rgba(222,104,92,.5),transparent 52%)';
-  const pct = Math.round(((idx+1)/LINES.length)*100);
-  $('#progress').style.width = Math.max(14,pct)+'%';
+  $('#progress').style.width = Math.max(14,Math.round(((idx+1)/LINES.length)*100))+'%';
 }
 
 /* ---------- bottom sheet ---------- */
@@ -474,74 +515,52 @@ function openSheet(i,btn){
   const t=LINES[idx].tokens[i];
   $('#sWord').textContent=t.th;
   $('#sRoman').innerHTML='<b>'+t.roman+'</b> · '+t.tone;
-  $('#sPos').textContent=t.pos;
-  $('#sMean').textContent=t.en;
-  $('#sNote').textContent=t.note||'';
-  $('#aiText').textContent=LINES[idx].ai;
-  aiBox.dataset.open='false';
-  const key=t.th;
-  const sBtn=$('#saveBtn');
+  $('#sPos').textContent=t.pos; $('#sMean').textContent=t.en; $('#sNote').textContent=t.note||'';
+  $('#aiText').textContent=LINES[idx].ai; aiBox.dataset.open='false';
+  const key=t.th, sBtn=$('#saveBtn');
   sBtn.classList.toggle('saved',saved.has(key));
   sBtn.innerHTML = saved.has(key)?'✓ Guardada':'★ Guardar palabra';
   sheet.classList.add('open'); scrim.classList.add('open');
 }
 function closeSheet(){
   sheet.classList.remove('open'); scrim.classList.remove('open');
-  document.querySelectorAll('.tok.active').forEach(e=>e.classList.remove('active'));
-  current=null;
+  document.querySelectorAll('.tok.active').forEach(e=>e.classList.remove('active')); current=null;
 }
 scrim.addEventListener('click',closeSheet);
-
-$('#aiBtn').addEventListener('click',()=>{
-  aiBox.dataset.open = aiBox.dataset.open==='true'?'false':'true';
-});
-
+$('#aiBtn').addEventListener('click',()=>{ aiBox.dataset.open = aiBox.dataset.open==='true'?'false':'true'; });
 $('#saveBtn').addEventListener('click',()=>{
   if(current==null) return;
-  const key=LINES[idx].tokens[current].th;
-  const sBtn=$('#saveBtn');
+  const key=LINES[idx].tokens[current].th, sBtn=$('#saveBtn');
   if(saved.has(key)){ saved.delete(key); sBtn.classList.remove('saved'); sBtn.innerHTML='★ Guardar palabra'; }
   else{ saved.add(key); sBtn.classList.add('saved'); sBtn.innerHTML='✓ Guardada'; }
   $('#savedCount').textContent=saved.size; persist();
 });
-
 $('#dictBtn').addEventListener('click',()=>{
   const t=LINES[idx].tokens[current];
-  $('#sNote').textContent = (t.note?t.note+'  ':'') + '→ (Diccionario completo: Lexitron + Wiktionary en la app real.)';
+  $('#sNote').textContent=(t.note?t.note+'  ':'')+'→ (Diccionario completo: Lexitron + Wiktionary en la app real.)';
 });
-
-/* ---------- text-to-speech ---------- */
 $('#speakBtn').addEventListener('click',()=>{
   if(current==null) return;
-  const t=LINES[idx].tokens[current];
-  try{
-    const u=new SpeechSynthesisUtterance(t.th);
-    u.lang='th-TH'; u.rate=.85;
-    const v=speechSynthesis.getVoices().find(v=>/th/i.test(v.lang));
-    if(v) u.voice=v;
+  try{ const u=new SpeechSynthesisUtterance(LINES[idx].tokens[current].th); u.lang='th-TH'; u.rate=.85;
+    const v=speechSynthesis.getVoices().find(v=>/th/i.test(v.lang)); if(v) u.voice=v;
     speechSynthesis.cancel(); speechSynthesis.speak(u);
   }catch(e){}
 });
 
-/* ---------- controls ---------- */
+/* ---------- player controls ---------- */
 $('#breakBtn').addEventListener('click',e=>{
-  breaks=!breaks;
-  e.currentTarget.setAttribute('aria-pressed',breaks);
+  breaks=!breaks; e.currentTarget.setAttribute('aria-pressed',breaks);
   lineEl.classList.toggle('reveal',breaks);
   $('#hintText').textContent = breaks?'✦ límites de palabra visibles':'✦ pasa el cursor o toca una palabra';
 });
 $('#nextBtn').addEventListener('click',()=>{ idx=(idx+1)%LINES.length; closeSheet(); renderLine(); });
 $('#prevBtn').addEventListener('click',()=>{ idx=(idx-1+LINES.length)%LINES.length; closeSheet(); renderLine(); });
-$('#repeatBtn').addEventListener('click',()=>{ $('#speakBtn').click?.(); pulse($('#caption')); });
-$('#playBtn').addEventListener('click',()=>{ pulse($('#caption')); });
-$('#transBtn')?.addEventListener('click',()=>{});
-
-// tap translation to reveal
+$('#repeatBtn').addEventListener('click',()=>$('#speakBtn').click());
 transEl.addEventListener('click',()=>transEl.classList.toggle('hidden-t'));
+$('#searchInput').addEventListener('input',renderGrid);
 
-function pulse(el){ el.animate?.([{opacity:.4},{opacity:1}],{duration:400}); }
-
-renderLine();
+/* ---------- init ---------- */
+renderChips(); renderChannels(); renderGrid(); renderLine();
 </script>
 </body>
 </html>
