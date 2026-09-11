@@ -1,23 +1,36 @@
-# Bai — Thai Immersion (prototipo)
+# Bai — Thai Immersion (web)
 
-Aprender tailandés por inmersión a partir de vídeos de YouTube (dramas/lakorn, BL,
-vlogs), con subtítulos interactivos. Enfocada a iPhone, usable también en web.
+Aprender tailandés por inmersión a partir de vídeos de YouTube (dramas/lakorn,
+BL, vlogs, música), con subtítulos interactivos. **Empezamos por la web** (el
+hover del ratón para ver los cortes de palabra luce mejor y se prueba al
+instante); más adelante se envuelve como app de iPhone reaprovechando el código.
 
-## Estado
-Prototipo de la **función estrella**: subtítulo tailandés escrito sin espacios
-(como se lee de verdad) donde puedes:
+## Probarla
+Abre `index.html` en un navegador. Con el proyecto publicado en la web
+(GitHub Pages, ver abajo) la reproducción de YouTube y las miniaturas funcionan
+de verdad.
 
-- **Pasar el cursor / activar "แยกคำ"** → cada palabra se resalta en un color
-  distinto, así ves los límites de palabra sin romper la lectura natural.
-- **Tocar una palabra** → ficha con pronunciación (con tono), categoría,
-  significado, "explícamelo en contexto" (IA) y guardar en tu vocabulario.
-- Escuchar la palabra (text-to-speech), navegar entre líneas, ver/ocultar la
-  traducción.
+### Qué hace ahora (prototipo)
+- **BaiTube**: buscador (con búsqueda "inteligente" tolerante a acentos/relleno),
+  fila de canales y catálogo. Solo contenido en tailandés.
+- **Pegar enlace**: pega cualquier URL de YouTube y se abre el reproductor real
+  con subtítulos tailandeses activados.
+- **Reproductor real** de YouTube (embed) con subtítulos TH.
+- **Lectura interactiva** (sobre frases de demostración): el subtítulo se muestra
+  sin espacios; al pasar el cursor / activar "แยกคำ" cada palabra se resalta en un
+  color distinto; al tocar una palabra sale su ficha (pronunciación con tono,
+  significado, explicación IA de ejemplo, guardar, audio TTS).
+- **Tema claro/oscuro** según preferencia del sistema, con conmutador manual.
 
-Abre `prototype/index.html` en el navegador (o en el móvil) para probarlo.
+### Simulado todavía (siguiente fase = backend)
+- Segmentación real de palabras deducida por contexto (PyThaiNLP / deepcut + IA).
+- Diccionario real (Lexitron + Wiktionary) enriquecido con IA.
+- Subtítulos automáticos por IA (Whisper) con caché para vídeos sin subtítulos.
+- Catálogo real vía API de datos de YouTube (solo tailandés).
 
-## Próximos pasos (ver conversación)
-- Segmentación real de palabras (PyThaiNLP / deepcut) en lugar de datos fijos.
-- Diccionario con fuentes libres (Lexitron + Wiktionary) enriquecido con IA.
-- Catálogo de vídeos vía **embed** oficial de YouTube (nunca descarga/rehospedaje).
-- App iOS + web con base compartida (Expo / React Native + react-native-web).
+## Publicar en la web (GitHub Pages)
+1. En GitHub → **Settings → Pages**.
+2. En *Build and deployment* → *Source*: **Deploy from a branch**.
+3. Elige la rama y la carpeta **/ (root)**, y guarda.
+4. En un minuto tendrás una URL pública (`https://<usuario>.github.io/language-thai-app/`)
+   que abre `index.html` con reproducción real, ideal para el iPhone en Safari.
