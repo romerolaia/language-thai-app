@@ -107,6 +107,7 @@ input{font-family:inherit}
 .card{border:none;background:none;padding:0;text-align:left;display:flex;flex-direction:column;gap:7px}
 .thumb{position:relative;aspect-ratio:16/10;border-radius:13px;overflow:hidden;color:#fff}
 .thumb .g{position:absolute;inset:0}
+.thumb .th-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .thumb .g::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.06) 0 2px,transparent 2px 20px);mix-blend-mode:overlay}
 .thumb .dur{position:absolute;right:6px;bottom:6px;background:rgba(10,8,14,.8);color:#fff;font-size:10px;font-weight:600;padding:2px 6px;border-radius:6px;font-variant-numeric:tabular-nums}
 .thumb .lvl{position:absolute;left:6px;top:6px;background:rgba(10,8,14,.55);backdrop-filter:blur(4px);color:#fff;font-family:var(--font-display);font-weight:700;font-size:10px;padding:2px 7px;border-radius:7px}
@@ -128,6 +129,10 @@ input{font-family:inherit}
 .appscroll{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch}
 
 .video{position:relative;margin:0 12px;border-radius:18px;overflow:hidden;background:var(--video);aspect-ratio:16/10;color:var(--video-ink);isolation:isolate}
+.ytholder{display:none;position:absolute;inset:0;z-index:4}
+.ytholder iframe{width:100%;height:100%;border:0;display:block}
+.video.real .scene,.video.real .yt,.video.real .play,.video.real .caption,.video.real .bar{display:none}
+.video.real .ytholder{display:block}
 .video .scene{position:absolute;inset:0;transition:opacity .5s}
 .video .scene::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.05) 0 2px,transparent 2px 22px);mix-blend-mode:overlay}
 .video .yt{position:absolute;top:10px;left:12px;display:flex;align-items:center;gap:6px;font-size:11px;opacity:.85;font-family:var(--font-display)}
@@ -287,6 +292,7 @@ input{font-family:inherit}
 
           <div class="appscroll">
             <div class="video">
+              <div class="ytholder" id="ytHolder"></div>
               <div class="scene" id="scene"></div>
               <div class="yt"><span class="rec"></span> YouTube · <span id="ytChannel">GMMTV</span> (embed)</div>
               <button class="play" id="playBtn" aria-label="Reproducir">
@@ -359,16 +365,25 @@ const CHANNELS = [
   {n:"GMM", c:"linear-gradient(150deg,#D65E79,#7C6BD8)"}
 ];
 const CATS = ["Todos","ละคร Lakorn","วาย BL","Vlogs","เพลง Música","พอดแคสต์ Podcast"];
+/* id = ID real de YouTube → miniatura y reproducción reales (subtítulos TH).
+   Sin id = tarjeta de ejemplo de diseño (miniatura de color). */
 const VIDEOS = [
+  {id:"uXPM9TL7nLQ", ti:"Comprehensible Thai — para principiantes", ch:"Comprehensible Thai", cat:"Vlogs", lvl:"A1", dur:"real", subs:"th", g:"linear-gradient(160deg,#2c3a1f,#131a0d)"},
   {ti:"รักออกอากาศ — On Air", ch:"GMMTV", cat:"วาย BL", lvl:"A2", dur:"45:02", subs:"th", g:"linear-gradient(160deg,#2a2140,#15111d)"},
   {ti:"บ้านเราสองคน (ละครรัก)", ch:"ช่อง3", cat:"ละคร Lakorn", lvl:"B1", dur:"51:20", subs:"ai", g:"linear-gradient(160deg,#233a44,#111a1d)"},
   {ti:"เที่ยวเชียงใหม่ 3 วัน ทำอะไรดี", ch:"Point of View", cat:"Vlogs", lvl:"A1", dur:"14:58", subs:"th", g:"linear-gradient(160deg,#3a2b17,#1a140b)"},
-  {ti:"ทำอาหารไทยง่ายๆ ที่บ้าน", ch:"Point of View", cat:"Vlogs", lvl:"A2", dur:"9:33", subs:"ai", g:"linear-gradient(160deg,#2c3a1f,#131a0d)"},
   {ti:"เพลงรักเก่าๆ ฟังสบาย", ch:"GMM", cat:"เพลง Música", lvl:"A2", dur:"4:12", subs:"th", g:"linear-gradient(160deg,#3a2138,#1a111d)"},
   {ti:"พอดแคสต์ภาษาไทย EP.12", ch:"ThaiPod", cat:"พอดแคสต์ Podcast", lvl:"B1", dur:"28:40", subs:"ai", g:"linear-gradient(160deg,#1f2f3a,#0d151a)"},
   {ti:"ละครสั้น: วันสุดท้ายของเรา", ch:"GMMTV", cat:"ละคร Lakorn", lvl:"A2", dur:"12:05", subs:"th", g:"linear-gradient(160deg,#3a2140,#1a111d)"},
   {ti:"สัมภาษณ์นักแสดงวัยรุ่น", ch:"GMMTV", cat:"Vlogs", lvl:"B1", dur:"18:22", subs:"ai", g:"linear-gradient(160deg,#233a2f,#111a15)"}
 ];
+function parseYouTubeId(u){
+  if(!u) return null;
+  const m=(''+u).match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
+  if(m) return m[1];
+  const s=(''+u).trim();
+  return /^[A-Za-z0-9_-]{11}$/.test(s)?s:null;
+}
 
 /* ---------- lines used by the player (mock, hand-tokenised) ---------- */
 const LINES = [
@@ -452,8 +467,9 @@ function renderGrid(){
     const subsTag = v.subs==='th'
       ? '<span class="subs th">✓ subtítulos TH</span>'
       : '<span class="subs ai">✦ subs IA</span>';
+    const img = v.id ? '<img class="th-img" src="https://i.ytimg.com/vi/'+v.id+'/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">' : '';
     b.innerHTML =
-      '<div class="thumb"><div class="g" style="background:'+v.g+'"></div>'+
+      '<div class="thumb"><div class="g" style="background:'+v.g+'"></div>'+img+
       '<span class="lvl">'+v.lvl+'</span>'+subsTag+
       '<span class="dur">'+v.dur+'</span></div>'+
       '<div class="meta"><div class="ti">'+v.ti+'</div><div class="ch">'+v.ch+' · '+v.cat+'</div></div>';
@@ -472,9 +488,20 @@ function openPlayer(v){
   $('#showSub').textContent=v.ch+' · '+v.cat;
   $('#showLvl').textContent=v.lvl;
   $('#ytChannel').textContent=v.ch;
-  $('#subsource').innerHTML = v.subs==='th'
-    ? '<span class="tagd th">SUBTÍTULOS TH</span> Este vídeo ya traía subtítulos tailandeses → instantáneo y gratis.'
-    : '<span class="tagd ai">SUBS IA</span> Subtítulos generados por IA (una vez) y guardados en caché → gratis a partir de ahora.';
+  const panel=document.querySelector('.video'), holder=$('#ytHolder');
+  if(v.id){
+    panel.classList.add('real');
+    holder.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.id+
+      '?cc_load_policy=1&cc_lang_pref=th&hl=th&rel=0&modestbranding=1" title="'+
+      (v.ti||'')+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+    $('#subsource').innerHTML='<span class="tagd th">VÍDEO REAL</span> Reproductor de YouTube con subtítulos tailandeses. '+
+      '<a href="https://www.youtube.com/watch?v='+v.id+'" target="_blank" rel="noopener" style="color:var(--brand);font-weight:600">Abrir en YouTube ↗</a>';
+  }else{
+    panel.classList.remove('real'); holder.innerHTML='';
+    $('#subsource').innerHTML = v.subs==='th'
+      ? '<span class="tagd th">SUBTÍTULOS TH</span> Ejemplo de diseño. En la app real este vídeo se reproduce igual que el reproductor real de arriba.'
+      : '<span class="tagd ai">SUBS IA</span> Ejemplo: subtítulos generados por IA (una vez) y guardados en caché → gratis a partir de ahí.';
+  }
   idx=0; closeSheet(); renderLine();
   showView('player');
   $('#playerView .appscroll').scrollTop=0;
@@ -483,18 +510,22 @@ $('#backBtn').addEventListener('click',()=>showView('home'));
 
 /* paste link → simulate processing then open a generated video */
 $('#pasteGo').addEventListener('click',()=>{
-  const url=($('#pasteInput').value||'').trim();
+  const raw=($('#pasteInput').value||'').trim();
+  const id=parseYouTubeId(raw);
+  if(!id){
+    $('#pasteInput').value=''; $('#pasteInput').placeholder='Pega un enlace válido de YouTube…';
+    $('#pasteInput').focus(); return;
+  }
   const proc=$('#proc');
-  const hasSubs = Math.random()>.5;
-  $('#procMsg').textContent = hasSubs? 'Cargando subtítulos…' : 'Preparando subtítulos…';
-  $('#procSub').textContent = hasSubs? 'El vídeo ya tenía subtítulos tailandeses' : 'Vídeo nuevo: la IA transcribe el principio y ya puedes empezar';
+  $('#procMsg').textContent='Cargando vídeo…';
+  $('#procSub').textContent='Abriendo el reproductor con subtítulos tailandeses';
   proc.classList.add('on');
   setTimeout(()=>{
     proc.classList.remove('on');
-    openPlayer({ti: url? 'Vídeo pegado' : 'Vídeo de ejemplo', ch:'YouTube', cat:'Enlace', lvl:'A2', dur:'—',
-                subs: hasSubs?'th':'ai', g:'linear-gradient(160deg,#243a2f,#111a15)'});
-  }, hasSubs?900:1800);
+    openPlayer({id, ti:'Vídeo pegado', ch:'YouTube', cat:'Enlace', lvl:'—', subs:'th'});
+  }, 650);
 });
+$('#pasteInput').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#pasteGo').click(); });
 
 /* ---------- player: line rendering ---------- */
 const lineEl=$('#line'), transEl=$('#trans'), capEl=$('#caption'), sceneEl=$('#scene');
