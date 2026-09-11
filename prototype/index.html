@@ -13,6 +13,7 @@
   --bg:#EBE6F0; --surface:#FFFFFF; --surface-2:#F5F1F8; --ink:#241C2E;
   --ink-soft:#6C6478; --ink-faint:#9A93A6; --line:#E7E1ED;
   --gold:#D99A2B; --gold-soft:#F7E9C6; --rose:#DE685C;
+  --brand:#2E2A6B;  /* Thai royal indigo — flag blue */
   --video:#15111D; --video-ink:#F4EFF8; --sheet-shadow:rgba(36,28,46,.20);
   --w0:#2FA39B; --w1:#7C6BD8; --w2:#D98A2B; --w3:#D65E79; --w4:#4C9E52; --w5:#3E82C9;
   --w-alpha:.16; --radius:22px;
@@ -25,7 +26,7 @@
     --bg:#0C0A11; --surface:#191320; --surface-2:#221A2E; --ink:#F3EEF8;
     --ink-soft:#A89FB4; --ink-faint:#786F86; --line:#2E2639; --gold:#ECB24A;
     --gold-soft:#3A2E17; --rose:#EE7A6E; --video:#0B0910; --video-ink:#F4EFF8;
-    --sheet-shadow:rgba(0,0,0,.5); --w-alpha:.26;
+    --sheet-shadow:rgba(0,0,0,.5); --w-alpha:.26; --brand:#A7A2F2;
     --w0:#3FC4BA; --w1:#9585EA; --w2:#EDB24A; --w3:#EE7C93; --w4:#67C06D; --w5:#5E9EE0;
   }
 }
@@ -33,7 +34,7 @@
   --bg:#0C0A11; --surface:#191320; --surface-2:#221A2E; --ink:#F3EEF8;
   --ink-soft:#A89FB4; --ink-faint:#786F86; --line:#2E2639; --gold:#ECB24A;
   --gold-soft:#3A2E17; --rose:#EE7A6E; --video:#0B0910; --video-ink:#F4EFF8;
-  --sheet-shadow:rgba(0,0,0,.5); --w-alpha:.26;
+  --sheet-shadow:rgba(0,0,0,.5); --w-alpha:.26; --brand:#A7A2F2;
   --w0:#3FC4BA; --w1:#9585EA; --w2:#EDB24A; --w3:#EE7C93; --w4:#67C06D; --w5:#5E9EE0;
 }
 *{box-sizing:border-box}
@@ -52,7 +53,7 @@ input{font-family:inherit}
 .pitch .brand{font-family:var(--font-display);font-weight:700;font-size:20px;color:var(--ink);letter-spacing:.2px;display:inline-flex;align-items:center;gap:8px}
 .pitch .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px var(--gold-soft)}
 .pitch p{margin:6px 0 0;font-size:12.5px;line-height:1.45}
-.pitch .tag{color:var(--gold);font-weight:600}
+.pitch .tag{color:var(--brand);font-weight:600}
 
 .device{width:100%;max-width:390px;background:var(--surface);border-radius:44px;padding:12px;box-shadow:0 2px 4px rgba(36,28,46,.08),0 24px 60px -16px var(--sheet-shadow);border:1px solid var(--line);position:relative}
 .screen{position:relative;background:var(--surface);border-radius:34px;overflow:hidden;height:812px;max-height:calc(100vh - 130px);display:flex;flex-direction:column}
@@ -68,9 +69,9 @@ input{font-family:inherit}
 
 /* ---------- Home / BaiTube ---------- */
 .homebar{display:flex;align-items:center;gap:10px;padding:4px 16px 8px;flex:0 0 auto}
-.homebar .logo{font-family:var(--font-display);font-weight:700;font-size:19px;display:flex;align-items:center;gap:7px}
-.homebar .logo .mark{width:24px;height:24px;border-radius:8px;background:linear-gradient(150deg,var(--gold),var(--rose));display:grid;place-items:center;color:#fff;font-size:13px}
-.homebar .logo b{color:var(--gold);font-weight:700}
+.homebar .logo{font-family:var(--font-display);font-weight:600;font-size:19px;letter-spacing:-.015em;display:flex;align-items:center;gap:8px}
+.homebar .logo .mark{width:26px;height:26px;border-radius:9px;background:var(--brand);display:grid;place-items:center;color:#fff;font-family:var(--font-thai);font-size:13px;font-weight:600}
+.homebar .logo b{color:var(--brand);font-weight:600}
 .homebar .gear{margin-left:auto;background:var(--surface-2);border:none;width:34px;height:34px;border-radius:12px;display:grid;place-items:center;color:var(--ink)}
 .homescroll{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:16px}
 
