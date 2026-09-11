@@ -11,8 +11,7 @@
 :root{
   --bg:#EFEBF3; --surface:#FFFFFF; --surface-2:#F5F1F8; --ink:#241C2E;
   --ink-soft:#6C6478; --ink-faint:#9A93A6; --line:#E7E1ED;
-  --gold:#D99A2B; --gold-soft:#F7E9C6; --rose:#DE685C;
-  --brand:#2E2A6B;
+  --gold:#D99A2B; --gold-soft:#F7E9C6; --rose:#DE685C; --brand:#2E2A6B;
   --video:#15111D; --video-ink:#F4EFF8; --shadow:rgba(36,28,46,.16);
   --w0:#2FA39B; --w1:#7C6BD8; --w2:#D98A2B; --w3:#D65E79; --w4:#4C9E52; --w5:#3E82C9;
   --w-alpha:.16;
@@ -47,10 +46,7 @@ a{color:var(--brand)}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:8px}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 
-/* ---------- top bar ---------- */
-.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:16px;
-  padding:12px 24px;background:color-mix(in srgb,var(--surface) 88%,transparent);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:16px;padding:12px 24px;background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .logo{font-family:var(--font-display);font-weight:600;font-size:21px;letter-spacing:-.015em;display:flex;align-items:center;gap:9px;flex:0 0 auto}
 .logo .mark{width:30px;height:30px;border-radius:50%;background:var(--brand);display:grid;place-items:center;color:#fff;font-family:var(--font-thai);font-size:15px;font-weight:600}
 .topsearch{flex:1;max-width:560px;display:flex;align-items:center;gap:10px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
@@ -62,22 +58,22 @@ a{color:var(--brand)}
 
 .wrap{max-width:1200px;margin:0 auto;padding:24px}
 
-/* ---------- home ---------- */
 .paste{display:flex;align-items:center;gap:12px;background:linear-gradient(110deg,var(--gold-soft),transparent);border:1px dashed color-mix(in srgb,var(--gold) 40%,transparent);border-radius:14px;padding:14px 16px;margin-bottom:22px}
 .paste .ic{width:36px;height:36px;border-radius:10px;background:var(--surface);display:grid;place-items:center;color:var(--gold);flex:0 0 auto;border:1px solid color-mix(in srgb,var(--gold) 30%,transparent)}
 .paste .txt{min-width:0;flex:1}
 .paste .txt b{font-family:var(--font-display);font-size:13.5px;font-weight:600;display:block}
 .paste .txt input{border:none;background:none;outline:none;width:100%;font-size:13.5px;color:var(--ink);margin-top:2px}
 .paste .txt input::placeholder{color:var(--ink-faint)}
-.paste .go{border:none;background:var(--gold);color:#231a06;font-family:var(--font-display);font-weight:600;font-size:13.5px;padding:10px 18px;border-radius:11px;flex:0 0 auto}
+.paste .go{border:none;background:var(--gold);color:#231a06;font-family:var(--font-display);font-weight:600;font-size:13.5px;padding:10px 18px;border-radius:11px;flex:0 0 auto;white-space:nowrap}
 
 .chips{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:6px}
 .chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 15px;font-family:var(--font-display);font-weight:500;font-size:13px;color:var(--ink-soft)}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 
-.rowhead{display:flex;align-items:baseline;gap:10px;margin:26px 0 12px}
+.rowhead{display:flex;align-items:baseline;gap:10px;margin:26px 0 12px;flex-wrap:wrap}
 .rowhead h3{margin:0;font-family:var(--font-display);font-weight:600;font-size:17px}
 .rowhead span{font-size:12.5px;color:var(--ink-faint)}
+.rowhead .link{background:none;border:none;color:var(--brand);font-weight:600;font-size:12.5px;padding:0;font-family:var(--font-body)}
 
 .channels{display:flex;gap:22px;flex-wrap:wrap}
 .channel{width:78px;text-align:center;border:none;background:none;padding:0}
@@ -100,11 +96,9 @@ a{color:var(--brand)}
 .card .ch{font-size:12px;color:var(--ink-faint);margin-top:1px}
 .empty{grid-column:1/-1;text-align:center;color:var(--ink-faint);font-size:14px;padding:40px 10px}
 
-/* ---------- player ---------- */
 .pback{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:11px;padding:9px 14px;font-family:var(--font-display);font-weight:500;font-size:13.5px;margin-bottom:16px}
 .player-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:26px;align-items:start}
 @media (max-width:920px){.player-grid{grid-template-columns:1fr}}
-
 .video{position:relative;border-radius:16px;overflow:hidden;background:var(--video);aspect-ratio:16/9;color:var(--video-ink);isolation:isolate;box-shadow:0 12px 30px -14px var(--shadow)}
 .ytholder{display:none;position:absolute;inset:0}
 .ytholder iframe{width:100%;height:100%;border:0;display:block}
@@ -118,20 +112,17 @@ a{color:var(--brand)}
 .video .play svg{margin-left:3px}
 .video .caption{position:absolute;left:0;right:0;bottom:0;padding:18px 18px 16px;background:linear-gradient(to top,rgba(10,8,14,.86),rgba(10,8,14,.15) 75%,transparent);font-family:var(--font-thai);font-size:20px;font-weight:500;text-align:center}
 .video .caption .cap-en{display:block;font-family:var(--font-body);font-size:12.5px;font-weight:400;opacity:.72;margin-top:4px}
-
 .subsource{margin-top:14px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:13px;color:var(--ink-soft);background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:11px 14px}
 .subsource .tagd{font-family:var(--font-display);font-weight:600;font-size:10.5px;padding:2px 8px;border-radius:7px}
 .subsource .tagd.th{background:color-mix(in srgb,var(--w4) 18%,transparent);color:var(--w4)}
 .subsource .tagd.ai{background:var(--gold-soft);color:var(--gold)}
-
-.transport{display:flex;align-items:center;gap:10px;margin-top:16px}
+.transport{display:flex;align-items:center;gap:10px;margin-top:16px;flex-wrap:wrap}
 .transport button{border:1px solid var(--line);background:var(--surface);border-radius:11px;height:42px;padding:0 15px;display:inline-flex;align-items:center;gap:8px;font-family:var(--font-display);font-weight:500;font-size:13.5px;color:var(--ink)}
 .transport button.primary{background:var(--ink);color:var(--surface);border-color:var(--ink)}
 .transport .spacer{flex:1}
 .toggle[aria-pressed="true"]{background:var(--gold-soft);border-color:color-mix(in srgb,var(--gold) 34%,transparent);color:var(--gold)}
-
 .reader{margin-top:20px;padding:26px 24px;background:var(--surface-2);border-radius:16px;border:1px solid var(--line)}
-.reader .kicker{display:flex;align-items:center;gap:8px;font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:16px}
+.reader .kicker{display:flex;align-items:center;gap:8px;font-family:var(--font-display);font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:16px;flex-wrap:wrap}
 .reader .kicker .hint{margin-left:auto;text-transform:none;letter-spacing:0;font-weight:500;color:var(--gold)}
 .line{font-family:var(--font-thai);font-weight:500;font-size:42px;line-height:1.85;text-align:center;word-break:break-word}
 .tok{position:relative;border-radius:10px;padding:2px 2px;transition:background .16s,color .16s,transform .12s;cursor:pointer;border:none;background:none;font:inherit;color:inherit}
@@ -149,11 +140,10 @@ a{color:var(--brand)}
 .reader .trans.hidden-t{filter:blur(5px);opacity:.6;user-select:none;cursor:pointer}
 .reader .trans small{display:block;font-size:11px;color:var(--ink-faint);margin-top:3px;text-transform:uppercase;letter-spacing:.08em;filter:none}
 
-/* ---------- side panel (dictionary) ---------- */
 .side{position:sticky;top:88px;display:flex;flex-direction:column;gap:16px}
 .entry{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 10px 26px -16px var(--shadow)}
 .entry .empty-e{color:var(--ink-faint);font-size:14px;line-height:1.6;text-align:center;padding:18px 6px}
-.entry .empty-e .big{font-size:30px;display:block;margin-bottom:8px}
+.entry .empty-e .big{font-size:30px;display:block;margin-bottom:8px;font-family:var(--font-thai)}
 .entry .head{display:flex;align-items:flex-start;gap:12px}
 .entry .word{font-family:var(--font-thai);font-weight:600;font-size:38px;line-height:1.05}
 .entry .roman{color:var(--ink-soft);font-size:14.5px;margin-top:3px}
@@ -181,6 +171,24 @@ a{color:var(--brand)}
 .saved{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-soft)}
 .saved .pill{margin-left:auto;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-family:var(--font-display);font-weight:600;font-size:13px;color:var(--ink)}
 .saved .pill b{color:var(--gold)}
+
+/* preferences */
+.prefs{max-width:760px;margin:6px auto}
+.prefs h2{font-family:var(--font-display);font-size:27px;margin:4px 0 6px;text-wrap:balance}
+.prefs .sub{color:var(--ink-soft);margin:0 0 22px;font-size:14.5px;line-height:1.5}
+.field-lab{font-family:var(--font-display);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-faint);margin:22px 0 10px}
+.langrow{display:flex;gap:9px;flex-wrap:wrap}
+.langbtn{border:1.5px solid var(--line);background:var(--surface);border-radius:11px;padding:9px 15px;font-family:var(--font-display);font-weight:500;font-size:13.5px;color:var(--ink)}
+.langbtn[aria-pressed="true"]{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 9%,transparent);color:var(--brand)}
+.interests{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.interest{display:flex;align-items:center;gap:11px;border:1.5px solid var(--line);background:var(--surface);border-radius:14px;padding:14px 15px;text-align:left;font-family:var(--font-display);font-weight:500;font-size:14px;color:var(--ink);transition:border-color .15s,background .15s}
+.interest .em{font-size:22px;line-height:1;flex:0 0 auto}
+.interest .chk{margin-left:auto;width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;color:transparent;flex:0 0 auto;font-size:13px}
+.interest[aria-pressed="true"]{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 8%,transparent)}
+.interest[aria-pressed="true"] .chk{background:var(--brand);border-color:var(--brand);color:#fff}
+.prefs-actions{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+.save-prefs{border:none;background:var(--brand);color:#fff;font-family:var(--font-display);font-weight:600;font-size:14px;padding:13px 24px;border-radius:12px}
+.skip-prefs{border:1px solid var(--line);background:var(--surface);color:var(--ink);font-family:var(--font-display);font-weight:500;font-size:14px;padding:13px 20px;border-radius:12px}
 </style>
 </head>
 <body>
@@ -188,71 +196,65 @@ a{color:var(--brand)}
   <div class="logo"><span class="mark">ใบ</span>Bai</div>
   <div class="topsearch">
     <svg width="18" height="18" viewBox="0 0 17 17" fill="none"><circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.7"/><path d="m12 12 4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-    <input id="searchInput" type="search" placeholder="Busca canales o vídeos tailandeses… p. ej. GMMTV" aria-label="Buscar">
+    <input id="searchInput" type="search" data-i18n-ph="search_ph" aria-label="Buscar">
   </div>
   <span class="spacer"></span>
-  <button class="iconbtn" id="themeBtn" aria-label="Cambiar tema claro/oscuro"></button>
+  <button class="iconbtn" id="prefsBtn" aria-label="Preferencias" title="Preferencias">
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 5h7M13 5h2M3 13h2M8 13h7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="5" r="2.1" stroke="currentColor" stroke-width="1.7"/><circle cx="6" cy="13" r="2.1" stroke="currentColor" stroke-width="1.7"/></svg>
+  </button>
+  <button class="iconbtn" id="themeBtn" aria-label="Tema"></button>
 </header>
 
 <main class="wrap">
-  <!-- ======= HOME ======= -->
+  <!-- HOME -->
   <section id="homeView">
     <div class="paste">
       <span class="ic" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 10 10 6M5.5 3.5 7 2a3 3 0 0 1 4 4l-1.5 1.5M10.5 12.5 9 14a3 3 0 0 1-4-4l1.5-1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
       <span class="txt">
-        <b>Pega un enlace de YouTube tailandés (con subtítulos) para probarlo de verdad</b>
-        <input id="pasteInput" type="url" placeholder="https://www.youtube.com/watch?v=…" aria-label="Enlace de YouTube">
+        <b data-i18n="paste_title"></b>
+        <input id="pasteInput" type="url" data-i18n-ph="paste_ph" aria-label="YouTube">
       </span>
-      <button class="go" id="pasteGo">Abrir vídeo</button>
+      <button class="go" id="pasteGo" data-i18n="paste_go"></button>
     </div>
-
-    <div class="chips" id="chips" role="tablist"></div>
-
-    <div class="rowhead"><h3>Canales en tailandés</h3></div>
+    <div class="chips" id="chips"></div>
+    <div class="rowhead"><h3 data-i18n="channels_h"></h3></div>
     <div class="channels" id="channels"></div>
-
-    <div class="rowhead"><h3>Para ti</h3><span>solo contenido en tailandés 🇹🇭</span></div>
+    <div class="rowhead"><h3 data-i18n="foryou_h"></h3><span id="forYouNote"></span></div>
     <div class="grid" id="grid"></div>
   </section>
 
-  <!-- ======= PLAYER ======= -->
+  <!-- PLAYER -->
   <section id="playerView" hidden>
-    <button class="pback" id="backBtn"><svg width="9" height="14" viewBox="0 0 10 16" fill="none"><path d="M8 1 2 8l6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Volver al catálogo</button>
-
+    <button class="pback" id="backBtn"><svg width="9" height="14" viewBox="0 0 10 16" fill="none"><path d="M8 1 2 8l6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> <span data-i18n="back"></span></button>
     <div class="player-grid">
       <div class="main-col">
         <div class="video">
           <div class="ytholder" id="ytHolder"></div>
           <div class="scene" id="scene"></div>
-          <div class="yt"><span class="rec"></span> YouTube · <span id="ytChannel">GMMTV</span> (embed)</div>
-          <button class="play" id="playBtn" aria-label="Reproducir"><svg width="22" height="24" viewBox="0 0 20 22" fill="currentColor"><path d="M2 2.2c0-.9 1-1.5 1.8-1L18 9.3c.8.5.8 1.6 0 2.1L3.8 20.8c-.8.5-1.8-.1-1.8-1z"/></svg></button>
+          <div class="yt"><span class="rec"></span> YouTube · <span id="ytChannel"></span> (embed)</div>
+          <button class="play" id="playBtn" aria-label="Play"><svg width="22" height="24" viewBox="0 0 20 22" fill="currentColor"><path d="M2 2.2c0-.9 1-1.5 1.8-1L18 9.3c.8.5.8 1.6 0 2.1L3.8 20.8c-.8.5-1.8-.1-1.8-1z"/></svg></button>
           <div class="caption" id="caption"></div>
         </div>
-
         <div class="subsource" id="subsource"></div>
-
         <div class="transport">
-          <button id="prevBtn" aria-label="Línea anterior"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M12 1 5 7l7 6zM3 1h2v12H3z"/></svg> Anterior</button>
-          <button class="primary" id="repeatBtn">↻ Repetir / escuchar</button>
-          <button id="nextBtn" aria-label="Línea siguiente">Siguiente <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M2 1l7 6-7 6zM9 1h2v12H9z"/></svg></button>
+          <button id="prevBtn"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M12 1 5 7l7 6zM3 1h2v12H3z"/></svg> <span data-i18n="prev"></span></button>
+          <button class="primary" id="repeatBtn" data-i18n="repeat"></button>
+          <button id="nextBtn"><span data-i18n="next"></span> <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M2 1l7 6-7 6zM9 1h2v12H9z"/></svg></button>
           <span class="spacer"></span>
-          <button class="toggle" id="breakBtn" aria-pressed="false" title="Mostrar límites de palabra">แยกคำ · ver palabras</button>
+          <button class="toggle" id="breakBtn" aria-pressed="false" data-i18n="showwords"></button>
         </div>
-
         <div class="reader">
-          <div class="kicker">Línea actual<span class="hint" id="hintText">✦ pasa el ratón por la frase o haz clic en una palabra</span></div>
-          <div class="line" id="line" role="group" aria-label="Frase en tailandés"></div>
+          <div class="kicker"><span data-i18n="kicker"></span><span class="hint" id="hintText"></span></div>
+          <div class="line" id="line"></div>
           <div class="trans hidden-t" id="trans"></div>
         </div>
       </div>
-
       <aside class="side">
         <div class="entry" id="entry">
-          <div class="empty-e" id="entryEmpty"><span class="big">ใบ</span>Pasa el ratón por la frase para ver dónde empieza y acaba cada palabra. Haz clic en una y su significado aparecerá aquí.</div>
+          <div class="empty-e" id="entryEmpty"><span class="big">ใบ</span><span data-i18n="entry_empty"></span></div>
           <div id="entryContent" hidden>
-            <div class="head">
-              <div><div class="word" id="eWord"></div><div class="roman" id="eRoman"></div></div>
-              <button class="speak" id="speakBtn" aria-label="Escuchar"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M3 7h3l4-3v12l-4-3H3z"/><path d="M13 6a5 5 0 0 1 0 8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+            <div class="head"><div><div class="word" id="eWord"></div><div class="roman" id="eRoman"></div></div>
+              <button class="speak" id="speakBtn" aria-label="Audio"><svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M3 7h3l4-3v12l-4-3H3z"/><path d="M13 6a5 5 0 0 1 0 8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
             </div>
             <span class="pos" id="ePos"></span>
             <p class="mean" id="eMean"></p>
@@ -260,206 +262,304 @@ a{color:var(--brand)}
             <div class="ai" id="aiBox" data-open="false">
               <button class="ai-btn" id="aiBtn">
                 <span class="spark"><svg width="15" height="15" viewBox="0 0 15 15" fill="currentColor"><path d="M7.5 0l1.6 4.4L13.5 6 9.1 7.6 7.5 12 5.9 7.6 1.5 6l4.4-1.6z"/></svg></span>
-                <span class="lab">Explícamelo en contexto<small>Cómo funciona en la frase</small></span>
+                <span class="lab" data-i18n="explain_title"><small data-i18n="explain_sub"></small></span>
                 <span class="caret"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
               </button>
-              <div class="ai-body"><span class="demo">✦ ejemplo de explicación IA</span><span id="aiText"></span></div>
+              <div class="ai-body"><span class="demo" data-i18n="demo_label"></span><span id="aiText"></span></div>
             </div>
-            <div class="actions">
-              <button class="save" id="saveBtn">★ Guardar</button>
-              <button class="dict" id="dictBtn">Diccionario</button>
-            </div>
+            <div class="actions"><button class="save" id="saveBtn"></button><button class="dict" id="dictBtn" data-i18n="dict"></button></div>
           </div>
         </div>
-        <div class="saved">Vocabulario guardado <span class="pill">★ <b id="savedCount">0</b></span></div>
+        <div class="saved"><span data-i18n="vocab_saved"></span> <span class="pill">★ <b id="savedCount">0</b></span></div>
       </aside>
+    </div>
+  </section>
+
+  <!-- PREFERENCES -->
+  <section id="prefsView" hidden>
+    <div class="prefs">
+      <h2 data-i18n="prefs_title"></h2>
+      <p class="sub" data-i18n="prefs_sub"></p>
+      <div class="field-lab" data-i18n="lang_lab"></div>
+      <div class="langrow" id="langRow"></div>
+      <div class="field-lab" data-i18n="interests_lab"></div>
+      <div class="interests" id="interests"></div>
+      <div class="prefs-actions">
+        <button class="save-prefs" id="savePrefs" data-i18n="save_prefs"></button>
+        <button class="skip-prefs" id="skipPrefs" data-i18n="skip_prefs"></button>
+      </div>
     </div>
   </section>
 </main>
 
 <script>
-const CHANNELS = [
-  {n:"GMMTV", c:"linear-gradient(150deg,#7C6BD8,#DE685C)"},
-  {n:"ช่อง3", c:"linear-gradient(150deg,#3E82C9,#2FA39B)"},
-  {n:"Point of View", c:"linear-gradient(150deg,#D99A2B,#DE685C)"},
-  {n:"ThaiPBS", c:"linear-gradient(150deg,#4C9E52,#2FA39B)"},
-  {n:"GMM Grammy", c:"linear-gradient(150deg,#D65E79,#7C6BD8)"}
-];
-const CATS = ["Todos","ละคร Lakorn","วาย BL","Vlogs","เพลง Música","พอดแคสต์ Podcast"];
-/* id = ID real de YouTube → miniatura y reproducción reales. Sin id = ejemplo de diseño. */
-const VIDEOS = [
-  {ti:"รักออกอากาศ — On Air", ch:"GMMTV", cat:"วาย BL", lvl:"A2", dur:"45:02", subs:"th", g:"linear-gradient(160deg,#2a2140,#15111d)"},
-  {ti:"บ้านเราสองคน (ละครรัก)", ch:"ช่อง3", cat:"ละคร Lakorn", lvl:"B1", dur:"51:20", subs:"ai", g:"linear-gradient(160deg,#233a44,#111a1d)"},
-  {ti:"เที่ยวเชียงใหม่ 3 วัน ทำอะไรดี", ch:"Point of View", cat:"Vlogs", lvl:"A1", dur:"14:58", subs:"th", g:"linear-gradient(160deg,#3a2b17,#1a140b)"},
-  {ti:"ทำอาหารไทยง่ายๆ ที่บ้าน", ch:"Point of View", cat:"Vlogs", lvl:"A2", dur:"9:33", subs:"ai", g:"linear-gradient(160deg,#2c3a1f,#131a0d)"},
-  {ti:"เพลงรักเก่าๆ ฟังสบาย", ch:"GMM Grammy", cat:"เพลง Música", lvl:"A2", dur:"4:12", subs:"th", g:"linear-gradient(160deg,#3a2138,#1a111d)"},
-  {ti:"พอดแคสต์ภาษาไทย EP.12", ch:"ThaiPBS", cat:"พอดแคสต์ Podcast", lvl:"B1", dur:"28:40", subs:"ai", g:"linear-gradient(160deg,#1f2f3a,#0d151a)"},
-  {ti:"ละครสั้น: วันสุดท้ายของเรา", ch:"GMMTV", cat:"ละคร Lakorn", lvl:"A2", dur:"12:05", subs:"th", g:"linear-gradient(160deg,#3a2140,#1a111d)"},
-  {ti:"สัมภาษณ์นักแสดงวัยรุ่น", ch:"GMMTV", cat:"Vlogs", lvl:"B1", dur:"18:22", subs:"ai", g:"linear-gradient(160deg,#233a2f,#111a15)"}
-];
-function parseYouTubeId(u){
-  if(!u) return null;
-  const m=(''+u).match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/);
-  if(m) return m[1];
-  const s=(''+u).trim();
-  return /^[A-Za-z0-9_-]{11}$/.test(s)?s:null;
-}
+/* ---------------- i18n ---------------- */
+const I18N={
+ es:{search_ph:"Busca canales o vídeos… p. ej. GMMTV",paste_title:"Pega un enlace de YouTube tailandés (con subtítulos) para probarlo de verdad",paste_ph:"https://www.youtube.com/watch?v=…",paste_go:"Abrir vídeo",
+  todos:"Todos",channels_h:"Canales en tailandés",foryou_h:"Para ti",foryou_all:"solo contenido en tailandés 🇹🇭",foryou_prefs:"según tus intereses",edit:"editar",
+  back:"Volver al catálogo",prev:"Anterior",repeat:"↻ Repetir / escuchar",next:"Siguiente",showwords:"แยกคำ · ver palabras",
+  kicker:"Línea actual",hint_off:"✦ pasa el ratón por la frase o haz clic en una palabra",hint_on:"✦ límites de palabra visibles",trans_label:"traducción",
+  entry_empty:"Pasa el ratón por la frase para ver dónde empieza y acaba cada palabra. Haz clic en una y su significado aparecerá aquí.",
+  explain_title:"Explícamelo en contexto",explain_sub:"Cómo funciona en la frase",demo_label:"✦ ejemplo de explicación IA",save:"★ Guardar",saved:"✓ Guardada",dict:"Diccionario",
+  dict_note:"→ (Diccionario completo: Lexitron + Wiktionary en la app real.)",vocab_saved:"Vocabulario guardado",open_yt:"Abrir en YouTube ↗",
+  ss_real:"Reproductor de YouTube con subtítulos tailandeses.",ss_th:"Ejemplo de diseño. Para probar reproducción real, pega un enlace de YouTube arriba.",ss_ai:"Ejemplo: subtítulos por IA (una vez) y guardados en caché.",
+  tag_real:"VÍDEO REAL",tag_th:"SUBTÍTULOS TH",tag_ai:"SUBS IA",
+  prefs_title:"¿Qué te gusta ver?",prefs_sub:"Elige el idioma de la app y tus temas favoritos. Te mostraremos vídeos tailandeses de esos temas. Puedes cambiarlo cuando quieras.",
+  lang_lab:"Idioma de la app",interests_lab:"Tus intereses",save_prefs:"Guardar y empezar",skip_prefs:"Ver todo",
+  lang_auto:"Automático (dispositivo)",
+  pos_pronoun:"pronombre",pos_verb:"verbo",pos_aspect:"aspecto",pos_adverb:"adverbio",pos_particle:"partícula",pos_aux:"auxiliar",pos_question:"interrogativo",
+  tone_rising:"tono ascendente",tone_falling:"tono descendente",tone_mid:"tono medio",tone_high:"tono alto",tone_low:"tono bajo",tone_hf:"alto-descendente"},
+ en:{search_ph:"Search channels or videos… e.g. GMMTV",paste_title:"Paste a Thai YouTube link (with subtitles) to try it for real",paste_ph:"https://www.youtube.com/watch?v=…",paste_go:"Open video",
+  todos:"All",channels_h:"Thai channels",foryou_h:"For you",foryou_all:"Thai content only 🇹🇭",foryou_prefs:"based on your interests",edit:"edit",
+  back:"Back to catalogue",prev:"Previous",repeat:"↻ Repeat / listen",next:"Next",showwords:"แยกคำ · show words",
+  kicker:"Current line",hint_off:"✦ hover the sentence or click a word",hint_on:"✦ word boundaries visible",trans_label:"translation",
+  entry_empty:"Hover the sentence to see where each word starts and ends. Click one and its meaning appears here.",
+  explain_title:"Explain in context",explain_sub:"How it works in the sentence",demo_label:"✦ example AI explanation",save:"★ Save",saved:"✓ Saved",dict:"Dictionary",
+  dict_note:"→ (Full dictionary: Lexitron + Wiktionary in the real app.)",vocab_saved:"Saved vocabulary",open_yt:"Open on YouTube ↗",
+  ss_real:"YouTube player with Thai subtitles.",ss_th:"Design example. To test real playback, paste a YouTube link above.",ss_ai:"Example: AI subtitles (once) cached for next time.",
+  tag_real:"REAL VIDEO",tag_th:"TH SUBTITLES",tag_ai:"AI SUBS",
+  prefs_title:"What do you like to watch?",prefs_sub:"Pick the app language and your favourite topics. We'll show you Thai videos on those topics. You can change it anytime.",
+  lang_lab:"App language",interests_lab:"Your interests",save_prefs:"Save and start",skip_prefs:"See everything",
+  lang_auto:"Automatic (device)",
+  pos_pronoun:"pronoun",pos_verb:"verb",pos_aspect:"aspect",pos_adverb:"adverb",pos_particle:"particle",pos_aux:"auxiliary",pos_question:"question word",
+  tone_rising:"rising tone",tone_falling:"falling tone",tone_mid:"mid tone",tone_high:"high tone",tone_low:"low tone",tone_hf:"high-falling"},
+ th:{search_ph:"ค้นหาช่องหรือวิดีโอ… เช่น GMMTV",paste_title:"วางลิงก์ YouTube ภาษาไทย (ที่มีซับ) เพื่อทดลองจริง",paste_ph:"https://www.youtube.com/watch?v=…",paste_go:"เปิดวิดีโอ",
+  todos:"ทั้งหมด",channels_h:"ช่องภาษาไทย",foryou_h:"สำหรับคุณ",foryou_all:"เฉพาะเนื้อหาภาษาไทย 🇹🇭",foryou_prefs:"ตามความสนใจของคุณ",edit:"แก้ไข",
+  back:"กลับไปหน้ารวม",prev:"ก่อนหน้า",repeat:"↻ เล่นซ้ำ / ฟัง",next:"ถัดไป",showwords:"แยกคำ",
+  kicker:"ประโยคปัจจุบัน",hint_off:"✦ เลื่อนเมาส์ผ่านประโยค หรือคลิกที่คำ",hint_on:"✦ แสดงขอบเขตของคำ",trans_label:"คำแปล",
+  entry_empty:"เลื่อนเมาส์ผ่านประโยคเพื่อดูว่าแต่ละคำเริ่มและจบตรงไหน คลิกที่คำเพื่อดูความหมายที่นี่",
+  explain_title:"อธิบายในบริบท",explain_sub:"คำนี้ทำงานอย่างไรในประโยค",demo_label:"✦ ตัวอย่างคำอธิบายจาก AI",save:"★ บันทึก",saved:"✓ บันทึกแล้ว",dict:"พจนานุกรม",
+  dict_note:"→ (พจนานุกรมเต็ม: Lexitron + Wiktionary ในแอปจริง)",vocab_saved:"คำศัพท์ที่บันทึกไว้",open_yt:"เปิดใน YouTube ↗",
+  ss_real:"เครื่องเล่น YouTube พร้อมซับไทย",ss_th:"ตัวอย่างดีไซน์ หากต้องการเล่นจริง วางลิงก์ YouTube ด้านบน",ss_ai:"ตัวอย่าง: ซับจาก AI (ครั้งเดียว) แล้วเก็บไว้ในแคช",
+  tag_real:"วิดีโอจริง",tag_th:"ซับไทย",tag_ai:"ซับ AI",
+  prefs_title:"คุณชอบดูอะไร?",prefs_sub:"เลือกภาษาของแอปและหัวข้อที่ชอบ เราจะแนะนำวิดีโอภาษาไทยตามหัวข้อนั้น เปลี่ยนได้ตลอดเวลา",
+  lang_lab:"ภาษาของแอป",interests_lab:"ความสนใจของคุณ",save_prefs:"บันทึกและเริ่ม",skip_prefs:"ดูทั้งหมด",
+  lang_auto:"อัตโนมัติ (อุปกรณ์)",
+  pos_pronoun:"สรรพนาม",pos_verb:"คำกริยา",pos_aspect:"การก",pos_adverb:"คำวิเศษณ์",pos_particle:"คำลงท้าย",pos_aux:"คำช่วย",pos_question:"คำถาม",
+  tone_rising:"เสียงจัตวา",tone_falling:"เสียงโท",tone_mid:"เสียงสามัญ",tone_high:"เสียงตรี",tone_low:"เสียงเอก",tone_hf:"ตรี-โท"}
+};
+const LANGS=[["auto","lang_auto"],["es","Español"],["en","English"],["th","ไทย"]];
+function detectLang(){ try{ const l=(navigator.language||'es').toLowerCase(); if(l.startsWith('th'))return'th'; if(l.startsWith('en'))return'en'; if(l.startsWith('es'))return'es'; }catch(e){} return 'es'; }
+let langPref = (()=>{ try{ return localStorage.getItem('bai_lang')||'auto'; }catch(e){ return 'auto'; } })();
+let lang = langPref==='auto'?detectLang():langPref;
+const glossLang = ()=> lang==='th'?'en':lang;   /* glosas de ejemplo: th usa inglés */
+function t(k){ return (I18N[lang]&&I18N[lang][k]) || I18N.es[k] || k; }
 
-const LINES = [
-  {en:"I've liked you for a long time.", scene:"linear-gradient(160deg,#2a2140,#15111d 70%)",
-   ai:"Palabra por palabra: “yo” + “gustar” + “tú”, y luego มานานแล้ว = “desde hace mucho, ya”. Aquí มา no es “venir”: apilado con นาน…แล้ว convierte el gustar en algo que empezó hace tiempo y sigue siendo verdad ahora.",
-   tokens:[
-    {th:"ฉัน",roman:"chǎn",tone:"tono ascendente",pos:"pronombre",en:"yo / a mí",note:"Primera persona muy común."},
-    {th:"ชอบ",roman:"chɔ̂ɔp",tone:"tono descendente",pos:"verbo",en:"gustar",note:"El verbo central: “me gustas”."},
-    {th:"เธอ",roman:"thəə",tone:"tono medio",pos:"pronombre",en:"tú",note:"“Tú” afectivo, típico en canciones y parejas."},
-    {th:"มา",roman:"maa",tone:"tono medio",pos:"aspecto",en:"desde (hasta ahora)",note:"Aquí NO es “venir”: marca acción que sigue hasta el presente."},
-    {th:"นาน",roman:"naan",tone:"tono medio",pos:"adverbio",en:"mucho tiempo",note:""},
-    {th:"แล้ว",roman:"lɛ́ɛw",tone:"tono alto",pos:"partícula",en:"ya",note:"El estado ya es verdad."}
-   ]},
-  {en:"Where are you going?", scene:"linear-gradient(160deg,#233a44,#111a1d 70%)",
-   ai:"Fíjate en el orden: la palabra interrogativa ไหน (“dónde”) va al FINAL. Literalmente “Tú vas dónde?”.",
-   tokens:[
-    {th:"เธอ",roman:"thəə",tone:"tono medio",pos:"pronombre",en:"tú",note:""},
-    {th:"จะ",roman:"jà",tone:"tono bajo",pos:"auxiliar",en:"(futuro) ir a",note:"Marca futuro / intención."},
-    {th:"ไป",roman:"pai",tone:"tono medio",pos:"verbo",en:"ir",note:""},
-    {th:"ไหน",roman:"nǎi",tone:"tono ascendente",pos:"interrogativo",en:"dónde / cuál",note:"La pregunta va al final."}
-   ]},
-  {en:"Please don't cry.", scene:"linear-gradient(160deg,#3a2138,#1a111d 70%)",
-   ai:"ร้องไห้ es UNA sola palabra (“llorar”), aunque tenga dos sílabas — no se parte en ร้อง + ไห้. เลย…นะ al final vuelven cariñoso un seco “no llores”.",
-   tokens:[
-    {th:"อย่า",roman:"yàa",tone:"tono bajo",pos:"auxiliar",en:"no (prohibición)",note:"Para decir a alguien que no haga algo."},
-    {th:"ร้องไห้",roman:"rɔ́ɔng-hâi",tone:"alto-descendente",pos:"verbo",en:"llorar",note:"Una sola palabra de dos sílabas: se mantiene unida."},
-    {th:"เลย",roman:"ləəi",tone:"tono medio",pos:"partícula",en:"(suaviza)",note:"Suaviza la orden, añade calidez."},
-    {th:"นะ",roman:"ná",tone:"tono alto",pos:"partícula",en:"(“¿vale?” amable)",note:"Partícula final amistosa."}
-   ]}
+/* ---------------- data ---------------- */
+const CHANNELS=[
+  {n:"GMMTV",c:"linear-gradient(150deg,#7C6BD8,#DE685C)"},
+  {n:"ช่อง3",c:"linear-gradient(150deg,#3E82C9,#2FA39B)"},
+  {n:"Point of View",c:"linear-gradient(150deg,#D99A2B,#DE685C)"},
+  {n:"ThaiPBS",c:"linear-gradient(150deg,#4C9E52,#2FA39B)"},
+  {n:"GMM Grammy",c:"linear-gradient(150deg,#D65E79,#7C6BD8)"}
+];
+const GENRES=[
+  {id:'lakorn',emoji:'🎭',es:'Lakorn (drama)',en:'Lakorn (drama)',th:'ละคร'},
+  {id:'bl',emoji:'💙',es:'BL (Boys Love)',en:'BL (Boys Love)',th:'วาย (BL)'},
+  {id:'gl',emoji:'💗',es:'GL (Girls Love)',en:'GL (Girls Love)',th:'GL'},
+  {id:'vlog',emoji:'🎒',es:'Vlogs',en:'Vlogs',th:'วล็อก'},
+  {id:'gaming',emoji:'🎮',es:'Gaming',en:'Gaming',th:'เกม'},
+  {id:'adventure',emoji:'🧭',es:'Aventura',en:'Adventure',th:'ผจญภัย'},
+  {id:'interview',emoji:'🎤',es:'Entrevistas',en:'Interviews',th:'สัมภาษณ์'},
+  {id:'music',emoji:'🎵',es:'Música',en:'Music',th:'เพลง'},
+  {id:'food',emoji:'🍜',es:'Comida',en:'Food',th:'อาหาร'},
+  {id:'podcast',emoji:'🎙️',es:'Podcast',en:'Podcast',th:'พอดแคสต์'}
+];
+const genre=id=>GENRES.find(g=>g.id===id);
+const genreLabel=id=>{ const g=genre(id); return g?(g[lang]||g.es):id; };
+const VIDEOS=[
+  {ti:"รักออกอากาศ — On Air",ch:"GMMTV",genre:'bl',lvl:"A2",dur:"45:02",subs:"th",g:"linear-gradient(160deg,#2a2140,#15111d)"},
+  {ti:"บ้านเราสองคน (ละครรัก)",ch:"ช่อง3",genre:'lakorn',lvl:"B1",dur:"51:20",subs:"ai",g:"linear-gradient(160deg,#233a44,#111a1d)"},
+  {ti:"จีบเธอทั้งเมือง — GL Story",ch:"GMMTV",genre:'gl',lvl:"A2",dur:"38:14",subs:"th",g:"linear-gradient(160deg,#3a2138,#1a111d)"},
+  {ti:"เที่ยวเชียงใหม่ 3 วัน ทำอะไรดี",ch:"Point of View",genre:'vlog',lvl:"A1",dur:"14:58",subs:"th",g:"linear-gradient(160deg,#3a2b17,#1a140b)"},
+  {ti:"เล่นเกมสยองขวัญ พากย์ไทย",ch:"GMM Grammy",genre:'gaming',lvl:"A2",dur:"22:40",subs:"ai",g:"linear-gradient(160deg,#1f2f3a,#0d151a)"},
+  {ti:"ผจญภัยในป่าใหญ่ ตอนที่ 1",ch:"ThaiPBS",genre:'adventure',lvl:"B1",dur:"27:05",subs:"ai",g:"linear-gradient(160deg,#26301a,#10160b)"},
+  {ti:"สัมภาษณ์นักแสดงวัยรุ่น",ch:"GMMTV",genre:'interview',lvl:"B1",dur:"18:22",subs:"ai",g:"linear-gradient(160deg,#233a2f,#111a15)"},
+  {ti:"เพลงรักเก่าๆ ฟังสบาย",ch:"GMM Grammy",genre:'music',lvl:"A2",dur:"4:12",subs:"th",g:"linear-gradient(160deg,#3a2140,#1a111d)"},
+  {ti:"ทำอาหารไทยง่ายๆ ที่บ้าน",ch:"Point of View",genre:'food',lvl:"A2",dur:"9:33",subs:"ai",g:"linear-gradient(160deg,#2c3a1f,#131a0d)"},
+  {ti:"พอดแคสต์ภาษาไทย EP.12",ch:"ThaiPBS",genre:'podcast',lvl:"B1",dur:"28:40",subs:"ai",g:"linear-gradient(160deg,#1f2a3a,#0d1119)"}
+];
+function parseYouTubeId(u){ if(!u) return null; const m=(''+u).match(/(?:youtu\.be\/|[?&]v=|\/embed\/|\/shorts\/)([A-Za-z0-9_-]{11})/); if(m) return m[1]; const s=(''+u).trim(); return /^[A-Za-z0-9_-]{11}$/.test(s)?s:null; }
+
+const LINES=[
+ {tr:{es:"Hace mucho que me gustas.",en:"I've liked you for a long time."},scene:"linear-gradient(160deg,#2a2140,#15111d 70%)",
+  ai:{es:"Palabra por palabra: “yo” + “gustar” + “tú”, y luego มานานแล้ว = “desde hace mucho, ya”. Aquí มา no es “venir”: apilado con นาน…แล้ว convierte el gustar en algo que empezó hace tiempo y sigue siendo verdad ahora.",
+      en:"Word by word: “I” + “like” + “you”, then มานานแล้ว = “for a long time already”. Here มา isn't “to come”; stacked with นาน…แล้ว it turns liking into something that began long ago and is still true now."},
+  tokens:[
+   {th:"ฉัน",roman:"chǎn",tone:"tone_rising",pos:"pos_pronoun",m:{es:"yo / a mí",en:"I / me"},n:{es:"Primera persona muy común.",en:"Very common first-person pronoun."}},
+   {th:"ชอบ",roman:"chɔ̂ɔp",tone:"tone_falling",pos:"pos_verb",m:{es:"gustar",en:"to like"},n:{es:"El verbo central: “me gustas”.",en:"The core verb: “I like you”."}},
+   {th:"เธอ",roman:"thəə",tone:"tone_mid",pos:"pos_pronoun",m:{es:"tú",en:"you"},n:{es:"“Tú” afectivo, típico en canciones y parejas.",en:"Affectionate “you”, common in songs and couples."}},
+   {th:"มา",roman:"maa",tone:"tone_mid",pos:"pos_aspect",m:{es:"desde (hasta ahora)",en:"since (up to now)"},n:{es:"Aquí NO es “venir”: marca acción que sigue hasta el presente.",en:"Not “to come” here: marks action continuing to the present."}},
+   {th:"นาน",roman:"naan",tone:"tone_mid",pos:"pos_adverb",m:{es:"mucho tiempo",en:"a long time"},n:{es:"",en:""}},
+   {th:"แล้ว",roman:"lɛ́ɛw",tone:"tone_high",pos:"pos_particle",m:{es:"ya",en:"already"},n:{es:"El estado ya es verdad.",en:"Signals the state is now true."}}
+  ]},
+ {tr:{es:"¿A dónde vas?",en:"Where are you going?"},scene:"linear-gradient(160deg,#233a44,#111a1d 70%)",
+  ai:{es:"Fíjate en el orden: la palabra interrogativa ไหน (“dónde”) va al FINAL. Literalmente “Tú vas dónde?”.",
+      en:"Notice the order: the question word ไหน (“where”) goes at the END. Literally “You will go where?”."},
+  tokens:[
+   {th:"เธอ",roman:"thəə",tone:"tone_mid",pos:"pos_pronoun",m:{es:"tú",en:"you"},n:{es:"",en:""}},
+   {th:"จะ",roman:"jà",tone:"tone_low",pos:"pos_aux",m:{es:"(futuro) ir a",en:"will (future)"},n:{es:"Marca futuro / intención.",en:"Marks future / intention."}},
+   {th:"ไป",roman:"pai",tone:"tone_mid",pos:"pos_verb",m:{es:"ir",en:"to go"},n:{es:"",en:""}},
+   {th:"ไหน",roman:"nǎi",tone:"tone_rising",pos:"pos_question",m:{es:"dónde / cuál",en:"where / which"},n:{es:"La pregunta va al final.",en:"The question word goes at the end."}}
+  ]},
+ {tr:{es:"No llores, por favor.",en:"Please don't cry."},scene:"linear-gradient(160deg,#3a2138,#1a111d 70%)",
+  ai:{es:"ร้องไห้ es UNA sola palabra (“llorar”), aunque tenga dos sílabas — no se parte en ร้อง + ไห้. เลย…นะ al final vuelven cariñoso un seco “no llores”.",
+      en:"ร้องไห้ is ONE word (“to cry”), even with two syllables — it isn't split into ร้อง + ไห้. เลย…นะ at the end turn a blunt “don't cry” into a warm one."},
+  tokens:[
+   {th:"อย่า",roman:"yàa",tone:"tone_low",pos:"pos_aux",m:{es:"no (prohibición)",en:"don't (prohibition)"},n:{es:"Para decir a alguien que no haga algo.",en:"Tells someone not to do something."}},
+   {th:"ร้องไห้",roman:"rɔ́ɔng-hâi",tone:"tone_hf",pos:"pos_verb",m:{es:"llorar",en:"to cry"},n:{es:"Una sola palabra de dos sílabas: se mantiene unida.",en:"A single two-syllable word: stays together."}},
+   {th:"เลย",roman:"ləəi",tone:"tone_mid",pos:"pos_particle",m:{es:"(suaviza)",en:"(softens)"},n:{es:"Suaviza la orden, añade calidez.",en:"Softens the command, adds warmth."}},
+   {th:"นะ",roman:"ná",tone:"tone_high",pos:"pos_particle",m:{es:"(“¿vale?” amable)",en:"(gentle “okay?”)"},n:{es:"Partícula final amistosa.",en:"Friendly ending particle."}}
+  ]}
 ];
 
-const $ = s => document.querySelector(s);
-const homeView=$('#homeView'), playerView=$('#playerView');
-let idx=0, breaks=false, current=null, cat="Todos";
-const saved = loadSaved();
-function loadSaved(){ try{ return new Set(JSON.parse(localStorage.getItem('bai_saved')||'[]')); }catch(e){ return new Set(); } }
+/* ---------------- state ---------------- */
+const $=s=>document.querySelector(s);
+const homeView=$('#homeView'),playerView=$('#playerView'),prefsView=$('#prefsView');
+let idx=0,breaks=false,current=null,genreFilter='all';
+const saved=(()=>{ try{ return new Set(JSON.parse(localStorage.getItem('bai_saved')||'[]')); }catch(e){ return new Set(); } })();
 function persist(){ try{ localStorage.setItem('bai_saved',JSON.stringify([...saved])); }catch(e){} }
-$('#savedCount').textContent = saved.size;
+let prefs=(()=>{ try{ const r=localStorage.getItem('bai_prefs'); return r?new Set(JSON.parse(r)):null; }catch(e){ return null; } })();
+let draft=new Set(prefs||[]);
+$('#savedCount').textContent=saved.size;
 
-/* smart search */
-const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' ').trim();
-const STOP = new Set(['official','oficial','channel','canal','video','videos','vids','yt','youtube','el','la','de','the','tv']);
-function matchesQuery(v,q){
-  q=norm(q); if(!q) return true;
-  const terms=q.split(' ').filter(t=>t&&!STOP.has(t)); if(!terms.length) return true;
-  const hay=norm(v.ti+' '+v.ch+' '+v.cat), words=hay.split(' ');
-  return terms.some(t=> hay.includes(t) || words.some(w=>w.startsWith(t)||(t.length>=3&&t.startsWith(w)&&w.length>=3)));
+/* ---------------- i18n apply ---------------- */
+function translateStatic(){
+  document.documentElement.lang = lang==='th'?'th':(lang==='en'?'en':'es');
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    // keep child <small> if present
+    const small=el.querySelector('small');
+    el.childNodes.forEach(n=>{ if(n.nodeType===3) n.textContent=''; });
+    if(small){ el.insertBefore(document.createTextNode(t(k)),small); } else { el.textContent=t(k); }
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=> el.placeholder=t(el.getAttribute('data-i18n-ph')));
+  $('#saveBtn') && ($('#saveBtn').innerHTML = (current!=null&&saved.has(LINES[idx].tokens[current].th))?t('saved'):t('save'));
 }
 
+/* ---------------- search ---------------- */
+const norm=s=>(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' ').trim();
+const STOP=new Set(['official','oficial','channel','canal','video','videos','vids','yt','youtube','el','la','de','the','tv']);
+function matchesQuery(v,q){ q=norm(q); if(!q) return true; const terms=q.split(' ').filter(x=>x&&!STOP.has(x)); if(!terms.length) return true;
+  const hay=norm(v.ti+' '+v.ch+' '+genreLabel(v.genre)+' '+v.genre), words=hay.split(' ');
+  return terms.some(x=> hay.includes(x) || words.some(w=>w.startsWith(x)||(x.length>=3&&x.startsWith(w)&&w.length>=3))); }
+
+/* ---------------- home ---------------- */
 function renderChips(){
   const c=$('#chips'); c.innerHTML='';
-  CATS.forEach(k=>{ const b=document.createElement('button'); b.className='chip'; b.textContent=k;
-    b.setAttribute('aria-pressed',k===cat); b.onclick=()=>{cat=k; renderChips(); renderGrid();}; c.appendChild(b); });
+  const items=[{id:'all',label:t('todos')}].concat(GENRES.map(g=>({id:g.id,label:g.emoji+' '+genreLabel(g.id)})));
+  items.forEach(it=>{ const b=document.createElement('button'); b.className='chip'; b.textContent=it.label;
+    b.setAttribute('aria-pressed',genreFilter===it.id); b.onclick=()=>{ genreFilter=it.id; renderChips(); renderGrid(); }; c.appendChild(b); });
 }
-function renderChannels(){
-  const c=$('#channels'); c.innerHTML='';
+function renderChannels(){ const c=$('#channels'); c.innerHTML='';
   CHANNELS.forEach(ch=>{ const d=document.createElement('button'); d.className='channel';
     d.innerHTML='<span class="av" style="background:'+ch.c+'">'+ch.n.slice(0,2)+'</span><small>'+ch.n+'</small>';
-    d.onclick=()=>{ $('#searchInput').value=ch.n; renderGrid(); }; c.appendChild(d); });
-}
+    d.onclick=()=>{ $('#searchInput').value=ch.n; renderGrid(); }; c.appendChild(d); }); }
 function renderGrid(){
   const q=$('#searchInput').value||''; const g=$('#grid'); g.innerHTML='';
-  const list=VIDEOS.filter(v=> (cat==="Todos"||v.cat===cat) && matchesQuery(v,q));
-  if(!list.length){ g.innerHTML='<div class="empty">Sin resultados. Prueba "GMMTV", "vlog" o pega un enlace arriba.</div>'; return; }
-  list.forEach(v=>{
-    const b=document.createElement('button'); b.className='card';
-    const subsTag = v.subs==='th'?'<span class="subs th">✓ subtítulos TH</span>':'<span class="subs ai">✦ subs IA</span>';
-    const img = v.id?'<img class="th-img" src="https://i.ytimg.com/vi/'+v.id+'/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">':'';
-    b.innerHTML='<div class="thumb"><div class="g" style="background:'+v.g+'"></div>'+img+
-      '<span class="lvl">'+v.lvl+'</span>'+subsTag+'<span class="dur">'+v.dur+'</span></div>'+
-      '<div class="ti">'+v.ti+'</div><div class="ch">'+v.ch+' · '+v.cat+'</div>';
-    b.onclick=()=>openPlayer(v); g.appendChild(b);
-  });
+  let list=VIDEOS.filter(v=>matchesQuery(v,q));
+  if(genreFilter!=='all') list=list.filter(v=>v.genre===genreFilter);
+  else if(prefs&&prefs.size){ const pl=list.filter(v=>prefs.has(v.genre)); if(pl.length) list=pl; }
+  // note
+  const note=$('#forYouNote');
+  if(genreFilter==='all'&&prefs&&prefs.size){ note.innerHTML=t('foryou_prefs')+' · <button class="link" id="editPrefs">'+t('edit')+'</button>'; $('#editPrefs').onclick=openPrefs; }
+  else note.textContent=t('foryou_all');
+  if(!list.length){ g.innerHTML='<div class="empty">— · —</div>'; return; }
+  list.forEach(v=>{ const b=document.createElement('button'); b.className='card';
+    const subsTag=v.subs==='th'?'<span class="subs th">✓ '+t('tag_th')+'</span>':'<span class="subs ai">✦ '+t('tag_ai')+'</span>';
+    const img=v.id?'<img class="th-img" src="https://i.ytimg.com/vi/'+v.id+'/hqdefault.jpg" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">':'';
+    b.innerHTML='<div class="thumb"><div class="g" style="background:'+v.g+'"></div>'+img+'<span class="lvl">'+v.lvl+'</span>'+subsTag+'<span class="dur">'+v.dur+'</span></div>'+
+      '<div class="ti">'+v.ti+'</div><div class="ch">'+v.ch+' · '+genreLabel(v.genre)+'</div>';
+    b.onclick=()=>openPlayer(v); g.appendChild(b); });
 }
 
-function showView(w){ homeView.hidden=w!=='home'; playerView.hidden=w!=='player'; }
+/* ---------------- views ---------------- */
+function showView(w){ homeView.hidden=w!=='home'; playerView.hidden=w!=='player'; prefsView.hidden=w!=='prefs'; window.scrollTo(0,0); }
 function openPlayer(v){
   $('#ytChannel').textContent=v.ch;
-  const panel=$('.video'), holder=$('#ytHolder');
-  if(v.id){
-    panel.classList.add('real');
+  const panel=$('.video'),holder=$('#ytHolder');
+  if(v.id){ panel.classList.add('real');
     holder.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.id+'?cc_load_policy=1&cc_lang_pref=th&hl=th&rel=0&modestbranding=1" title="'+(v.ti||'')+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>';
-    $('#subsource').innerHTML='<span class="tagd th">VÍDEO REAL</span> Reproductor de YouTube con subtítulos tailandeses. <a href="https://www.youtube.com/watch?v='+v.id+'" target="_blank" rel="noopener">Abrir en YouTube ↗</a>';
-  }else{
-    panel.classList.remove('real'); holder.innerHTML='';
-    $('#subsource').innerHTML = v.subs==='th'
-      ? '<span class="tagd th">SUBTÍTULOS TH</span> Ejemplo de diseño. Para probar reproducción real, pega un enlace de YouTube arriba.'
-      : '<span class="tagd ai">SUBS IA</span> Ejemplo: subtítulos por IA (una vez) y guardados en caché.';
-  }
-  idx=0; clearEntry(); renderLine(); showView('player'); window.scrollTo(0,0);
+    $('#subsource').innerHTML='<span class="tagd th">'+t('tag_real')+'</span> '+t('ss_real')+' <a href="https://www.youtube.com/watch?v='+v.id+'" target="_blank" rel="noopener">'+t('open_yt')+'</a>';
+  }else{ panel.classList.remove('real'); holder.innerHTML='';
+    $('#subsource').innerHTML = v.subs==='th'?'<span class="tagd th">'+t('tag_th')+'</span> '+t('ss_th'):'<span class="tagd ai">'+t('tag_ai')+'</span> '+t('ss_ai'); }
+  idx=0; clearEntry(); renderLine(); showView('player');
 }
 $('#backBtn').onclick=()=>showView('home');
-
-/* paste link */
-$('#pasteGo').onclick=()=>{
-  const id=parseYouTubeId($('#pasteInput').value);
-  if(!id){ $('#pasteInput').value=''; $('#pasteInput').placeholder='Pega un enlace válido de YouTube…'; $('#pasteInput').focus(); return; }
-  openPlayer({id, ti:'Vídeo pegado', ch:'YouTube', cat:'Enlace', subs:'th'});
-};
+$('#pasteGo').onclick=()=>{ const id=parseYouTubeId($('#pasteInput').value); if(!id){ $('#pasteInput').value=''; $('#pasteInput').focus(); return; }
+  openPlayer({id,ti:'YouTube',ch:'YouTube',genre:'vlog',subs:'th'}); };
 $('#pasteInput').addEventListener('keydown',e=>{ if(e.key==='Enter') $('#pasteGo').click(); });
 
-/* reader */
-const lineEl=$('#line'), transEl=$('#trans'), capEl=$('#caption'), sceneEl=$('#scene');
+/* ---------------- reader ---------------- */
+const lineEl=$('#line'),transEl=$('#trans'),capEl=$('#caption'),sceneEl=$('#scene');
 function renderLine(){
-  const L=LINES[idx]; lineEl.innerHTML=''; lineEl.classList.toggle('reveal',breaks);
-  L.tokens.forEach((t,i)=>{ const b=document.createElement('button'); b.className='tok'; b.dataset.c=i%6; b.textContent=t.th;
-    b.setAttribute('aria-label',t.th+', '+t.en); b.onclick=()=>showEntry(i,b); lineEl.appendChild(b); });
-  capEl.innerHTML=L.tokens.map(t=>t.th).join('')+'<span class="cap-en">'+L.en+'</span>';
-  transEl.innerHTML=L.en+'<small>traducción</small>';
+  const L=LINES[idx],gl=glossLang(); lineEl.innerHTML=''; lineEl.classList.toggle('reveal',breaks);
+  L.tokens.forEach((tk,i)=>{ const b=document.createElement('button'); b.className='tok'; b.dataset.c=i%6; b.textContent=tk.th;
+    b.setAttribute('aria-label',tk.th+', '+tk.m[gl]); b.onclick=()=>showEntry(i,b); lineEl.appendChild(b); });
+  capEl.innerHTML=L.tokens.map(x=>x.th).join('')+'<span class="cap-en">'+L.tr[gl]+'</span>';
+  transEl.innerHTML=L.tr[gl]+'<small>'+t('trans_label')+'</small>';
   sceneEl.style.background=L.scene+',radial-gradient(120% 80% at 78% 18%,rgba(233,168,60,.5),transparent 55%),radial-gradient(120% 90% at 12% 92%,rgba(222,104,92,.5),transparent 52%)';
+  $('#hintText').textContent = breaks?t('hint_on'):t('hint_off');
 }
 
-/* dictionary side panel */
+/* ---------------- dictionary panel ---------------- */
 const aiBox=$('#aiBox');
-function clearEntry(){ current=null; $('#entryContent').hidden=true; $('#entryEmpty').hidden=false;
-  document.querySelectorAll('.tok.active').forEach(e=>e.classList.remove('active')); }
-function showEntry(i,btn){
-  current=i;
+function clearEntry(){ current=null; $('#entryContent').hidden=true; $('#entryEmpty').hidden=false; document.querySelectorAll('.tok.active').forEach(e=>e.classList.remove('active')); }
+function showEntry(i,btn){ current=i; const gl=glossLang();
   document.querySelectorAll('.tok.active').forEach(e=>e.classList.remove('active')); if(btn) btn.classList.add('active');
-  const t=LINES[idx].tokens[i];
-  $('#eWord').textContent=t.th; $('#eRoman').innerHTML='<b>'+t.roman+'</b> · '+t.tone;
-  $('#ePos').textContent=t.pos; $('#eMean').textContent=t.en; $('#eNote').textContent=t.note||'';
-  $('#aiText').textContent=LINES[idx].ai; aiBox.dataset.open='false';
-  const sBtn=$('#saveBtn'); sBtn.classList.toggle('saved',saved.has(t.th)); sBtn.innerHTML=saved.has(t.th)?'✓ Guardada':'★ Guardar';
+  const tk=LINES[idx].tokens[i];
+  $('#eWord').textContent=tk.th; $('#eRoman').innerHTML='<b>'+tk.roman+'</b> · '+t(tk.tone);
+  $('#ePos').textContent=t(tk.pos); $('#eMean').textContent=tk.m[gl]; $('#eNote').textContent=tk.n[gl]||'';
+  $('#aiText').textContent=LINES[idx].ai[gl]; aiBox.dataset.open='false';
+  const sBtn=$('#saveBtn'); sBtn.classList.toggle('saved',saved.has(tk.th)); sBtn.textContent=saved.has(tk.th)?t('saved'):t('save');
   $('#entryEmpty').hidden=true; $('#entryContent').hidden=false;
 }
 $('#aiBtn').onclick=()=>{ aiBox.dataset.open=aiBox.dataset.open==='true'?'false':'true'; };
-$('#saveBtn').onclick=()=>{ if(current==null) return; const key=LINES[idx].tokens[current].th, sBtn=$('#saveBtn');
-  if(saved.has(key)){ saved.delete(key); sBtn.classList.remove('saved'); sBtn.innerHTML='★ Guardar'; }
-  else{ saved.add(key); sBtn.classList.add('saved'); sBtn.innerHTML='✓ Guardada'; }
+$('#saveBtn').onclick=()=>{ if(current==null) return; const key=LINES[idx].tokens[current].th,sBtn=$('#saveBtn');
+  if(saved.has(key)){ saved.delete(key); sBtn.classList.remove('saved'); sBtn.textContent=t('save'); } else { saved.add(key); sBtn.classList.add('saved'); sBtn.textContent=t('saved'); }
   $('#savedCount').textContent=saved.size; persist(); };
-$('#dictBtn').onclick=()=>{ const t=LINES[idx].tokens[current]; $('#eNote').textContent=(t.note?t.note+'  ':'')+'→ (Diccionario completo: Lexitron + Wiktionary en la app real.)'; };
-$('#speakBtn').onclick=()=>{ if(current==null) return; try{ const u=new SpeechSynthesisUtterance(LINES[idx].tokens[current].th); u.lang='th-TH'; u.rate=.85;
-  const v=speechSynthesis.getVoices().find(v=>/th/i.test(v.lang)); if(v) u.voice=v; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} };
+$('#dictBtn').onclick=()=>{ const tk=LINES[idx].tokens[current],gl=glossLang(); $('#eNote').textContent=(tk.n[gl]?tk.n[gl]+'  ':'')+t('dict_note'); };
+$('#speakBtn').onclick=()=>{ if(current==null) return; try{ const u=new SpeechSynthesisUtterance(LINES[idx].tokens[current].th); u.lang='th-TH'; u.rate=.85; const v=speechSynthesis.getVoices().find(v=>/th/i.test(v.lang)); if(v) u.voice=v; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} };
 
-/* controls */
-$('#breakBtn').onclick=e=>{ breaks=!breaks; e.currentTarget.setAttribute('aria-pressed',breaks); lineEl.classList.toggle('reveal',breaks);
-  $('#hintText').textContent = breaks?'✦ límites de palabra visibles':'✦ pasa el ratón por la frase o haz clic en una palabra'; };
+/* ---------------- controls ---------------- */
+$('#breakBtn').onclick=e=>{ breaks=!breaks; e.currentTarget.setAttribute('aria-pressed',breaks); lineEl.classList.toggle('reveal',breaks); $('#hintText').textContent=breaks?t('hint_on'):t('hint_off'); };
 $('#nextBtn').onclick=()=>{ idx=(idx+1)%LINES.length; clearEntry(); renderLine(); };
 $('#prevBtn').onclick=()=>{ idx=(idx-1+LINES.length)%LINES.length; clearEntry(); renderLine(); };
 $('#repeatBtn').onclick=()=>{ if(current!=null) $('#speakBtn').click(); };
 transEl.onclick=()=>transEl.classList.toggle('hidden-t');
 $('#searchInput').addEventListener('input',renderGrid);
 
-/* theme */
+/* ---------------- preferences ---------------- */
+function renderLangRow(){ const c=$('#langRow'); c.innerHTML='';
+  LANGS.forEach(([id,lab])=>{ const b=document.createElement('button'); b.className='langbtn';
+    b.textContent = id==='auto'?t('lang_auto'):lab; b.setAttribute('aria-pressed',langPref===id);
+    b.onclick=()=>{ langPref=id; try{ localStorage.setItem('bai_lang',id); }catch(e){} lang=langPref==='auto'?detectLang():langPref; applyLangEverywhere(); renderLangRow(); renderInterests(); }; c.appendChild(b); }); }
+function renderInterests(){ const c=$('#interests'); c.innerHTML='';
+  GENRES.forEach(g=>{ const b=document.createElement('button'); b.className='interest'; b.setAttribute('aria-pressed',draft.has(g.id));
+    b.innerHTML='<span class="em">'+g.emoji+'</span>'+genreLabel(g.id)+'<span class="chk">✓</span>';
+    b.onclick=()=>{ if(draft.has(g.id)) draft.delete(g.id); else draft.add(g.id); b.setAttribute('aria-pressed',draft.has(g.id)); }; c.appendChild(b); }); }
+function openPrefs(){ draft=new Set(prefs||[]); renderLangRow(); renderInterests(); showView('prefs'); }
+$('#prefsBtn').onclick=openPrefs;
+$('#savePrefs').onclick=()=>{ prefs=new Set(draft); try{ localStorage.setItem('bai_prefs',JSON.stringify([...prefs])); }catch(e){} renderGrid(); showView('home'); };
+$('#skipPrefs').onclick=()=>{ if(prefs===null){ prefs=new Set(); try{ localStorage.setItem('bai_prefs','[]'); }catch(e){} } renderGrid(); showView('home'); };
+
+/* ---------------- theme ---------------- */
 const SUN='<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="3.6" stroke="currentColor" stroke-width="1.6"/><path d="M9 .8v2.2M9 15v2.2M.8 9H3M15 9h2.2M3.2 3.2 4.8 4.8M13.2 13.2l1.6 1.6M14.8 3.2 13.2 4.8M4.8 13.2 3.2 14.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>';
 const MOON='<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M15 10.5A6.5 6.5 0 1 1 7.5 3a5 5 0 0 0 7.5 7.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>';
 const themeBtn=$('#themeBtn');
 function systemDark(){ try{ return matchMedia('(prefers-color-scheme:dark)').matches; }catch(e){ return false; } }
-function currentTheme(){ return document.documentElement.getAttribute('data-theme') || (systemDark()?'dark':'light'); }
-function applyTheme(t){ document.documentElement.setAttribute('data-theme',t); themeBtn.innerHTML=t==='dark'?SUN:MOON; }
+function currentTheme(){ return document.documentElement.getAttribute('data-theme')||(systemDark()?'dark':'light'); }
+function applyTheme(x){ document.documentElement.setAttribute('data-theme',x); themeBtn.innerHTML=x==='dark'?SUN:MOON; }
 function initTheme(){ let s=null; try{ s=localStorage.getItem('bai_theme'); }catch(e){} applyTheme(s||currentTheme()); }
 themeBtn.onclick=()=>{ const n=currentTheme()==='dark'?'light':'dark'; applyTheme(n); try{ localStorage.setItem('bai_theme',n); }catch(e){} };
-try{ matchMedia('(prefers-color-scheme:dark)').addEventListener('change',e=>{ let s=null; try{ s=localStorage.getItem('bai_theme'); }catch(_){}
-  if(!s) applyTheme(e.matches?'dark':'light'); }); }catch(e){}
+try{ matchMedia('(prefers-color-scheme:dark)').addEventListener('change',e=>{ let s=null; try{ s=localStorage.getItem('bai_theme'); }catch(_){} if(!s) applyTheme(e.matches?'dark':'light'); }); }catch(e){}
 
-initTheme(); renderChips(); renderChannels(); renderGrid(); renderLine();
+/* ---------------- apply language everywhere ---------------- */
+function applyLangEverywhere(){ translateStatic(); renderChips(); renderGrid(); renderLine(); if(current!=null) showEntry(current); }
+
+/* ---------------- init ---------------- */
+initTheme(); translateStatic(); renderChips(); renderChannels(); renderGrid(); renderLine(); renderLangRow(); renderInterests();
+if(prefs===null) openPrefs(); else showView('home');
 </script>
 </body>
 </html>
