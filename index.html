@@ -241,6 +241,7 @@ a{color:var(--brand)}
           <button class="primary" id="repeatBtn" data-i18n="repeat"></button>
           <button id="nextBtn"><span data-i18n="next"></span> <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M2 1l7 6-7 6zM9 1h2v12H9z"/></svg></button>
           <span class="spacer"></span>
+          <button class="toggle" id="syncBtn" aria-pressed="false" data-i18n="sync_follow"></button>
           <button class="toggle" id="breakBtn" aria-pressed="false" data-i18n="showwords"></button>
         </div>
         <div class="reader">
@@ -302,6 +303,7 @@ const I18N={
   entry_empty:"Pasa el ratón por la frase para ver dónde empieza y acaba cada palabra. Haz clic en una y su significado aparecerá aquí.",
   explain_title:"Explícamelo en contexto",explain_sub:"Cómo funciona en la frase",demo_label:"✦ ejemplo de explicación IA",save:"★ Guardar",saved:"✓ Guardada",dict:"Diccionario",
   dict_note:"→ (Diccionario completo: Lexitron + Wiktionary en la app real.)",vocab_saved:"Vocabulario guardado",open_yt:"Abrir en YouTube ↗",
+  sync_follow:"🔗 Seguir el vídeo",sync_note:"✦ demo: las líneas avanzan con el vídeo (la sinc. real de este vídeo necesita el motor de subtítulos)",sync_nosite:"⚠ reproduce en el sitio publicado (no en la vista previa) para probar la sincronización",
   ss_real:"Reproductor de YouTube con subtítulos tailandeses.",ss_th:"Ejemplo de diseño. Para probar reproducción real, pega un enlace de YouTube arriba.",ss_ai:"Ejemplo: subtítulos por IA (una vez) y guardados en caché.",
   tag_real:"VÍDEO REAL",tag_th:"SUBTÍTULOS TH",tag_ai:"SUBS IA",
   prefs_title:"¿Qué te gusta ver?",prefs_sub:"Elige el idioma de la app y tus temas favoritos. Te mostraremos vídeos tailandeses de esos temas. Puedes cambiarlo cuando quieras.",
@@ -316,6 +318,7 @@ const I18N={
   entry_empty:"Hover the sentence to see where each word starts and ends. Click one and its meaning appears here.",
   explain_title:"Explain in context",explain_sub:"How it works in the sentence",demo_label:"✦ example AI explanation",save:"★ Save",saved:"✓ Saved",dict:"Dictionary",
   dict_note:"→ (Full dictionary: Lexitron + Wiktionary in the real app.)",vocab_saved:"Saved vocabulary",open_yt:"Open on YouTube ↗",
+  sync_follow:"🔗 Follow the video",sync_note:"✦ demo: lines advance with the video (real sync for this video needs the subtitle engine)",sync_nosite:"⚠ play on the published site (not the preview) to try the sync",
   ss_real:"YouTube player with Thai subtitles.",ss_th:"Design example. To test real playback, paste a YouTube link above.",ss_ai:"Example: AI subtitles (once) cached for next time.",
   tag_real:"REAL VIDEO",tag_th:"TH SUBTITLES",tag_ai:"AI SUBS",
   prefs_title:"What do you like to watch?",prefs_sub:"Pick the app language and your favourite topics. We'll show you Thai videos on those topics. You can change it anytime.",
@@ -330,6 +333,7 @@ const I18N={
   entry_empty:"เลื่อนเมาส์ผ่านประโยคเพื่อดูว่าแต่ละคำเริ่มและจบตรงไหน คลิกที่คำเพื่อดูความหมายที่นี่",
   explain_title:"อธิบายในบริบท",explain_sub:"คำนี้ทำงานอย่างไรในประโยค",demo_label:"✦ ตัวอย่างคำอธิบายจาก AI",save:"★ บันทึก",saved:"✓ บันทึกแล้ว",dict:"พจนานุกรม",
   dict_note:"→ (พจนานุกรมเต็ม: Lexitron + Wiktionary ในแอปจริง)",vocab_saved:"คำศัพท์ที่บันทึกไว้",open_yt:"เปิดใน YouTube ↗",
+  sync_follow:"🔗 ตามวิดีโอ",sync_note:"✦ เดโม: บรรทัดเลื่อนตามวิดีโอ (การซิงก์จริงต้องใช้ระบบซับไตเติล)",sync_nosite:"⚠ เล่นบนเว็บที่เผยแพร่ (ไม่ใช่พรีวิว) เพื่อทดสอบการซิงก์",
   ss_real:"เครื่องเล่น YouTube พร้อมซับไทย",ss_th:"ตัวอย่างดีไซน์ หากต้องการเล่นจริง วางลิงก์ YouTube ด้านบน",ss_ai:"ตัวอย่าง: ซับจาก AI (ครั้งเดียว) แล้วเก็บไว้ในแคช",
   tag_real:"วิดีโอจริง",tag_th:"ซับไทย",tag_ai:"ซับ AI",
   prefs_title:"คุณชอบดูอะไร?",prefs_sub:"เลือกภาษาของแอปและหัวข้อที่ชอบ เราจะแนะนำวิดีโอภาษาไทยตามหัวข้อนั้น เปลี่ยนได้ตลอดเวลา",
@@ -475,15 +479,43 @@ function renderGrid(){
 
 /* ---------------- views ---------------- */
 function showView(w){ homeView.hidden=w!=='home'; playerView.hidden=w!=='player'; prefsView.hidden=w!=='prefs'; window.scrollTo(0,0); }
+
+/* ---- YouTube player + sync engine ---- */
+let player=null,pollTimer=null,syncOn=false,playerMode='none';
+const DEMO_SYNC=[0,5,10]; /* segundos de ejemplo para las líneas 0,1,2 */
+function loadYT(cb){ if(window.YT&&window.YT.Player){ cb(); return; }
+  const prev=window.onYouTubeIframeAPIReady; window.onYouTubeIframeAPIReady=function(){ if(prev)prev(); cb(); };
+  if(!document.getElementById('yt-api')){ const s=document.createElement('script'); s.id='yt-api'; s.src='https://www.youtube.com/iframe_api'; document.head.appendChild(s); } }
+function stopPoll(){ if(pollTimer){ clearInterval(pollTimer); pollTimer=null; } }
+function destroyPlayer(){ stopPoll(); try{ if(player&&player.destroy) player.destroy(); }catch(e){} player=null; playerMode='none'; }
+function plainIframe(id,title){ return '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?cc_load_policy=1&cc_lang_pref=th&hl=th&rel=0&modestbranding=1&playsinline=1" title="'+(title||'')+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>'; }
+function startPoll(){ if(pollTimer) return; pollTimer=setInterval(function(){
+  if(!syncOn||playerMode!=='api'||!player||!player.getCurrentTime) return;
+  const cur=player.getCurrentTime(); let want=0; for(let i=0;i<DEMO_SYNC.length;i++){ if(cur>=DEMO_SYNC[i]) want=i; }
+  if(want!==idx){ idx=want%LINES.length; clearEntry(); renderLine(); } },400); }
+function updateSyncBtn(){ const b=$('#syncBtn'); if(b) b.setAttribute('aria-pressed', !!(syncOn&&playerMode==='api')); }
+function seekToLine(){ if(syncOn&&playerMode==='api'&&player&&player.seekTo){ try{ player.seekTo(DEMO_SYNC[idx]||0,true); }catch(e){} } }
+function startRealVideo(v){
+  destroyPlayer();
+  const holder=$('#ytHolder'); holder.innerHTML='<div id="ytMount" style="position:absolute;inset:0"></div>';
+  let made=false;
+  const fallback=()=>{ if(made) return; made=true; playerMode='iframe'; holder.innerHTML=plainIframe(v.id,v.ti); updateSyncBtn(); };
+  const to=setTimeout(fallback,2600);
+  try{ loadYT(function(){ if(made) return; made=true; clearTimeout(to); playerMode='api';
+    player=new YT.Player('ytMount',{ videoId:v.id, host:'https://www.youtube-nocookie.com',
+      playerVars:{cc_load_policy:1,cc_lang_pref:'th',hl:'th',rel:0,modestbranding:1,playsinline:1},
+      events:{ 'onStateChange':function(e){ if(e.data===1) startPoll(); else if(e.data===2||e.data===0) stopPoll(); } } });
+    updateSyncBtn();
+  }); }catch(e){ fallback(); }
+}
 function openPlayer(v){
-  $('#ytChannel').textContent=v.ch;
-  const panel=$('.video'),holder=$('#ytHolder');
-  if(v.id){ panel.classList.add('real');
-    holder.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+v.id+'?cc_load_policy=1&cc_lang_pref=th&hl=th&rel=0&modestbranding=1" title="'+(v.ti||'')+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>';
+  $('#ytChannel').textContent=v.ch; syncOn=false;
+  const panel=$('.video');
+  if(v.id){ panel.classList.add('real'); startRealVideo(v);
     $('#subsource').innerHTML='<span class="tagd th">'+t('tag_real')+'</span> '+t('ss_real')+' <a href="https://www.youtube.com/watch?v='+v.id+'" target="_blank" rel="noopener">'+t('open_yt')+'</a>';
-  }else{ panel.classList.remove('real'); holder.innerHTML='';
+  }else{ panel.classList.remove('real'); destroyPlayer(); $('#ytHolder').innerHTML='';
     $('#subsource').innerHTML = v.subs==='th'?'<span class="tagd th">'+t('tag_th')+'</span> '+t('ss_th'):'<span class="tagd ai">'+t('tag_ai')+'</span> '+t('ss_ai'); }
-  idx=0; clearEntry(); renderLine(); showView('player');
+  idx=0; clearEntry(); renderLine(); updateSyncBtn(); showView('player');
 }
 $('#backBtn').onclick=()=>showView('home');
 $('#pasteGo').onclick=()=>{ const id=parseYouTubeId($('#pasteInput').value); if(!id){ $('#pasteInput').value=''; $('#pasteInput').focus(); return; }
@@ -499,7 +531,7 @@ function renderLine(){
   capEl.innerHTML=L.tokens.map(x=>x.th).join('')+'<span class="cap-en">'+L.tr[gl]+'</span>';
   transEl.innerHTML=L.tr[gl]+'<small>'+t('trans_label')+'</small>';
   sceneEl.style.background=L.scene+',radial-gradient(120% 80% at 78% 18%,rgba(233,168,60,.5),transparent 55%),radial-gradient(120% 90% at 12% 92%,rgba(222,104,92,.5),transparent 52%)';
-  $('#hintText').textContent = breaks?t('hint_on'):t('hint_off');
+  $('#hintText').textContent = syncOn?t('sync_note'):(breaks?t('hint_on'):t('hint_off'));
 }
 
 /* ---------------- dictionary panel ---------------- */
@@ -523,8 +555,10 @@ $('#speakBtn').onclick=()=>{ if(current==null) return; try{ const u=new SpeechSy
 
 /* ---------------- controls ---------------- */
 $('#breakBtn').onclick=e=>{ breaks=!breaks; e.currentTarget.setAttribute('aria-pressed',breaks); lineEl.classList.toggle('reveal',breaks); $('#hintText').textContent=breaks?t('hint_on'):t('hint_off'); };
-$('#nextBtn').onclick=()=>{ idx=(idx+1)%LINES.length; clearEntry(); renderLine(); };
-$('#prevBtn').onclick=()=>{ idx=(idx-1+LINES.length)%LINES.length; clearEntry(); renderLine(); };
+$('#nextBtn').onclick=()=>{ idx=(idx+1)%LINES.length; clearEntry(); renderLine(); seekToLine(); };
+$('#prevBtn').onclick=()=>{ idx=(idx-1+LINES.length)%LINES.length; clearEntry(); renderLine(); seekToLine(); };
+$('#syncBtn').onclick=()=>{ if(playerMode!=='api'){ $('#hintText').textContent=t('sync_nosite'); return; }
+  syncOn=!syncOn; updateSyncBtn(); $('#hintText').textContent = syncOn?t('sync_note'):(breaks?t('hint_on'):t('hint_off')); if(syncOn) seekToLine(); };
 $('#repeatBtn').onclick=()=>{ if(current!=null) $('#speakBtn').click(); };
 transEl.onclick=()=>transEl.classList.toggle('hidden-t');
 $('#searchInput').addEventListener('input',renderGrid);
