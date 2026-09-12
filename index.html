@@ -304,6 +304,7 @@ const I18N={
   explain_title:"Explícamelo en contexto",explain_sub:"Cómo funciona en la frase",demo_label:"✦ ejemplo de explicación IA",save:"★ Guardar",saved:"✓ Guardada",dict:"Diccionario",
   dict_note:"→ (Diccionario completo: Lexitron + Wiktionary en la app real.)",vocab_saved:"Vocabulario guardado",open_yt:"Abrir en YouTube ↗",
   sync_follow:"🔗 Seguir el vídeo",sync_note:"✦ demo: las líneas avanzan con el vídeo (la sinc. real de este vídeo necesita el motor de subtítulos)",sync_nosite:"⚠ reproduce en el sitio publicado (no en la vista previa) para probar la sincronización",
+  sub_loading:"Obteniendo subtítulos del vídeo…",sub_none:"No se pudieron obtener subtítulos tailandeses (el vídeo no los tiene, o el motor no está desplegado en Netlify).",sub_live:"SUBTÍTULOS EN DIRECTO",sub_auto:"(automáticos de YouTube)",dict_pending:"Diccionario en camino — de momento se muestra la palabra.",trans_soon:"traducción — próximamente",sync_note_live:"✦ subtítulos en directo, sincronizados con el vídeo",
   ss_real:"Reproductor de YouTube con subtítulos tailandeses.",ss_th:"Ejemplo de diseño. Para probar reproducción real, pega un enlace de YouTube arriba.",ss_ai:"Ejemplo: subtítulos por IA (una vez) y guardados en caché.",
   tag_real:"VÍDEO REAL",tag_th:"SUBTÍTULOS TH",tag_ai:"SUBS IA",
   prefs_title:"¿Qué te gusta ver?",prefs_sub:"Elige el idioma de la app y tus temas favoritos. Te mostraremos vídeos tailandeses de esos temas. Puedes cambiarlo cuando quieras.",
@@ -319,6 +320,7 @@ const I18N={
   explain_title:"Explain in context",explain_sub:"How it works in the sentence",demo_label:"✦ example AI explanation",save:"★ Save",saved:"✓ Saved",dict:"Dictionary",
   dict_note:"→ (Full dictionary: Lexitron + Wiktionary in the real app.)",vocab_saved:"Saved vocabulary",open_yt:"Open on YouTube ↗",
   sync_follow:"🔗 Follow the video",sync_note:"✦ demo: lines advance with the video (real sync for this video needs the subtitle engine)",sync_nosite:"⚠ play on the published site (not the preview) to try the sync",
+  sub_loading:"Fetching the video's subtitles…",sub_none:"Couldn't get Thai subtitles (the video has none, or the engine isn't deployed on Netlify).",sub_live:"LIVE SUBTITLES",sub_auto:"(YouTube auto-captions)",dict_pending:"Dictionary coming soon — showing the word for now.",trans_soon:"translation — coming soon",sync_note_live:"✦ live subtitles, synced with the video",
   ss_real:"YouTube player with Thai subtitles.",ss_th:"Design example. To test real playback, paste a YouTube link above.",ss_ai:"Example: AI subtitles (once) cached for next time.",
   tag_real:"REAL VIDEO",tag_th:"TH SUBTITLES",tag_ai:"AI SUBS",
   prefs_title:"What do you like to watch?",prefs_sub:"Pick the app language and your favourite topics. We'll show you Thai videos on those topics. You can change it anytime.",
@@ -334,6 +336,7 @@ const I18N={
   explain_title:"อธิบายในบริบท",explain_sub:"คำนี้ทำงานอย่างไรในประโยค",demo_label:"✦ ตัวอย่างคำอธิบายจาก AI",save:"★ บันทึก",saved:"✓ บันทึกแล้ว",dict:"พจนานุกรม",
   dict_note:"→ (พจนานุกรมเต็ม: Lexitron + Wiktionary ในแอปจริง)",vocab_saved:"คำศัพท์ที่บันทึกไว้",open_yt:"เปิดใน YouTube ↗",
   sync_follow:"🔗 ตามวิดีโอ",sync_note:"✦ เดโม: บรรทัดเลื่อนตามวิดีโอ (การซิงก์จริงต้องใช้ระบบซับไตเติล)",sync_nosite:"⚠ เล่นบนเว็บที่เผยแพร่ (ไม่ใช่พรีวิว) เพื่อทดสอบการซิงก์",
+  sub_loading:"กำลังดึงซับไตเติลของวิดีโอ…",sub_none:"ไม่พบซับไตเติลภาษาไทย (วิดีโอไม่มี หรือยังไม่ได้ติดตั้งระบบบน Netlify)",sub_live:"ซับไตเติลสด",sub_auto:"(ซับอัตโนมัติของ YouTube)",dict_pending:"พจนานุกรมกำลังจะมา — ตอนนี้แสดงเฉพาะคำ",trans_soon:"คำแปล — เร็วๆ นี้",sync_note_live:"✦ ซับไตเติลสด ซิงก์กับวิดีโอ",
   ss_real:"เครื่องเล่น YouTube พร้อมซับไทย",ss_th:"ตัวอย่างดีไซน์ หากต้องการเล่นจริง วางลิงก์ YouTube ด้านบน",ss_ai:"ตัวอย่าง: ซับจาก AI (ครั้งเดียว) แล้วเก็บไว้ในแคช",
   tag_real:"วิดีโอจริง",tag_th:"ซับไทย",tag_ai:"ซับ AI",
   prefs_title:"คุณชอบดูอะไร?",prefs_sub:"เลือกภาษาของแอปและหัวข้อที่ชอบ เราจะแนะนำวิดีโอภาษาไทยตามหัวข้อนั้น เปลี่ยนได้ตลอดเวลา",
@@ -482,17 +485,31 @@ function showView(w){ homeView.hidden=w!=='home'; playerView.hidden=w!=='player'
 
 /* ---- YouTube player + sync engine ---- */
 let player=null,pollTimer=null,syncOn=false,playerMode='none';
-const DEMO_SYNC=[0,5,10]; /* segundos de ejemplo para las líneas 0,1,2 */
+let live=null,liveIdx=0,mode='demo',currentWord=null;
+const DEMO_SYNC=[0,5,10]; /* segundos de ejemplo para las líneas 0,1,2 (modo demo) */
+const SUB_ENDPOINT='/.netlify/functions/subtitles';
+const SEG=(()=>{ try{ return new Intl.Segmenter('th',{granularity:'word'}); }catch(e){ return null; } })();
+function segThai(text){ if(SEG){ const out=[]; for(const s of SEG.segment(text)){ if(s.segment.trim()) out.push(s.segment); } return out; } return (text||'').split(/(\s+)/).filter(x=>x.trim()); }
+async function fetchTranscript(id){
+  try{
+    const r=await fetch(SUB_ENDPOINT+'?v='+encodeURIComponent(id),{headers:{'Accept':'application/json'}});
+    if(!r.ok) return null;
+    const j=await r.json();
+    if(!j.ok||!Array.isArray(j.lines)||!j.lines.length) return null;
+    return { auto:!!j.auto, lines:j.lines.map(l=>({start:+l.start||0,dur:+l.dur||0,text:l.text,words:segThai(l.text)})) };
+  }catch(e){ return null; }
+}
 function loadYT(cb){ if(window.YT&&window.YT.Player){ cb(); return; }
   const prev=window.onYouTubeIframeAPIReady; window.onYouTubeIframeAPIReady=function(){ if(prev)prev(); cb(); };
   if(!document.getElementById('yt-api')){ const s=document.createElement('script'); s.id='yt-api'; s.src='https://www.youtube.com/iframe_api'; document.head.appendChild(s); } }
 function stopPoll(){ if(pollTimer){ clearInterval(pollTimer); pollTimer=null; } }
 function destroyPlayer(){ stopPoll(); try{ if(player&&player.destroy) player.destroy(); }catch(e){} player=null; playerMode='none'; }
-function plainIframe(id,title){ return '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?cc_load_policy=1&cc_lang_pref=th&hl=th&rel=0&modestbranding=1&playsinline=1" title="'+(title||'')+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>'; }
+function plainIframe(id,title){ return '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'?cc_load_policy=0&hl=th&rel=0&modestbranding=1&playsinline=1" title="'+(title||'')+'" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowfullscreen loading="lazy"></iframe>'; }
 function startPoll(){ if(pollTimer) return; pollTimer=setInterval(function(){
-  if(!syncOn||playerMode!=='api'||!player||!player.getCurrentTime) return;
-  const cur=player.getCurrentTime(); let want=0; for(let i=0;i<DEMO_SYNC.length;i++){ if(cur>=DEMO_SYNC[i]) want=i; }
-  if(want!==idx){ idx=want%LINES.length; clearEntry(); renderLine(); } },400); }
+  if(playerMode!=='api'||!player||!player.getCurrentTime) return;
+  const cur=player.getCurrentTime();
+  if(mode==='live'&&live){ let w=0; for(let i=0;i<live.lines.length;i++){ if(cur>=live.lines[i].start) w=i; } if(w!==liveIdx){ liveIdx=w; clearEntry(); renderLive(); } return; }
+  if(syncOn){ let want=0; for(let i=0;i<DEMO_SYNC.length;i++){ if(cur>=DEMO_SYNC[i]) want=i; } if(want!==idx){ idx=want%LINES.length; clearEntry(); renderLine(); } } },400); }
 function updateSyncBtn(){ const b=$('#syncBtn'); if(b) b.setAttribute('aria-pressed', !!(syncOn&&playerMode==='api')); }
 function seekToLine(){ if(syncOn&&playerMode==='api'&&player&&player.seekTo){ try{ player.seekTo(DEMO_SYNC[idx]||0,true); }catch(e){} } }
 function startRealVideo(v){
@@ -503,19 +520,42 @@ function startRealVideo(v){
   const to=setTimeout(fallback,2600);
   try{ loadYT(function(){ if(made) return; made=true; clearTimeout(to); playerMode='api';
     player=new YT.Player('ytMount',{ videoId:v.id, host:'https://www.youtube-nocookie.com',
-      playerVars:{cc_load_policy:1,cc_lang_pref:'th',hl:'th',rel:0,modestbranding:1,playsinline:1},
+      playerVars:{cc_load_policy:0,hl:'th',rel:0,modestbranding:1,playsinline:1},
       events:{ 'onStateChange':function(e){ if(e.data===1) startPoll(); else if(e.data===2||e.data===0) stopPoll(); } } });
     updateSyncBtn();
   }); }catch(e){ fallback(); }
 }
 function openPlayer(v){
-  $('#ytChannel').textContent=v.ch; syncOn=false;
+  $('#ytChannel').textContent=v.ch; syncOn=false; live=null; liveIdx=0; mode='demo';
   const panel=$('.video');
   if(v.id){ panel.classList.add('real'); startRealVideo(v);
-    $('#subsource').innerHTML='<span class="tagd th">'+t('tag_real')+'</span> '+t('ss_real')+' <a href="https://www.youtube.com/watch?v='+v.id+'" target="_blank" rel="noopener">'+t('open_yt')+'</a>';
+    $('#subsource').innerHTML='<span class="tagd th">'+t('tag_real')+'</span> '+t('sub_loading');
+    fetchTranscript(v.id).then(tr=>{
+      if(tr&&tr.lines.length){ live=tr; mode='live'; liveIdx=0; clearEntry(); renderLive();
+        $('#subsource').innerHTML='<span class="tagd th">'+t('sub_live')+'</span> '+(tr.auto?t('sub_auto')+' ':'')+'<a href="https://www.youtube.com/watch?v='+v.id+'" target="_blank" rel="noopener">'+t('open_yt')+'</a>';
+      }else{ mode='demo';
+        $('#subsource').innerHTML='<span class="tagd ai">'+t('tag_ai')+'</span> '+t('sub_none')+' <a href="https://www.youtube.com/watch?v='+v.id+'" target="_blank" rel="noopener">'+t('open_yt')+'</a>';
+      }
+      updateSyncBtn();
+    });
   }else{ panel.classList.remove('real'); destroyPlayer(); $('#ytHolder').innerHTML='';
     $('#subsource').innerHTML = v.subs==='th'?'<span class="tagd th">'+t('tag_th')+'</span> '+t('ss_th'):'<span class="tagd ai">'+t('tag_ai')+'</span> '+t('ss_ai'); }
   idx=0; clearEntry(); renderLine(); updateSyncBtn(); showView('player');
+}
+function renderLive(){
+  const L=live.lines[liveIdx]; lineEl.innerHTML=''; lineEl.classList.toggle('reveal',breaks);
+  (L.words.length?L.words:[L.text]).forEach((w,i)=>{ const b=document.createElement('button'); b.className='tok'; b.dataset.c=i%6; b.textContent=w; b.onclick=()=>showEntryLive(w,b); lineEl.appendChild(b); });
+  transEl.className='trans'; transEl.innerHTML='<span style="opacity:.6">'+t('trans_soon')+'</span>';
+  $('#hintText').textContent=t('sync_note_live');
+  const sb=$('#syncBtn'); if(sb) sb.hidden=true;
+}
+function showEntryLive(word,btn){
+  currentWord=word; current=null;
+  document.querySelectorAll('.tok.active').forEach(e=>e.classList.remove('active')); if(btn) btn.classList.add('active');
+  $('#eWord').textContent=word; $('#eRoman').innerHTML='—'; $('#ePos').textContent=''; $('#eMean').textContent=t('dict_pending'); $('#eNote').textContent='';
+  $('#aiBox').style.display='none';
+  const sBtn=$('#saveBtn'); sBtn.classList.toggle('saved',saved.has(word)); sBtn.textContent=saved.has(word)?t('saved'):t('save');
+  $('#entryEmpty').hidden=true; $('#entryContent').hidden=false;
 }
 $('#backBtn').onclick=()=>showView('home');
 $('#pasteGo').onclick=()=>{ const id=parseYouTubeId($('#pasteInput').value); if(!id){ $('#pasteInput').value=''; $('#pasteInput').focus(); return; }
@@ -532,31 +572,32 @@ function renderLine(){
   transEl.innerHTML=L.tr[gl]+'<small>'+t('trans_label')+'</small>';
   sceneEl.style.background=L.scene+',radial-gradient(120% 80% at 78% 18%,rgba(233,168,60,.5),transparent 55%),radial-gradient(120% 90% at 12% 92%,rgba(222,104,92,.5),transparent 52%)';
   $('#hintText').textContent = syncOn?t('sync_note'):(breaks?t('hint_on'):t('hint_off'));
+  const sb=$('#syncBtn'); if(sb) sb.hidden=false;
 }
 
 /* ---------------- dictionary panel ---------------- */
 const aiBox=$('#aiBox');
-function clearEntry(){ current=null; $('#entryContent').hidden=true; $('#entryEmpty').hidden=false; document.querySelectorAll('.tok.active').forEach(e=>e.classList.remove('active')); }
+function clearEntry(){ current=null; currentWord=null; $('#entryContent').hidden=true; $('#entryEmpty').hidden=false; document.querySelectorAll('.tok.active').forEach(e=>e.classList.remove('active')); }
 function showEntry(i,btn){ current=i; const gl=glossLang();
   document.querySelectorAll('.tok.active').forEach(e=>e.classList.remove('active')); if(btn) btn.classList.add('active');
-  const tk=LINES[idx].tokens[i];
+  const tk=LINES[idx].tokens[i]; currentWord=tk.th;
   $('#eWord').textContent=tk.th; $('#eRoman').innerHTML='<b>'+tk.roman+'</b> · '+t(tk.tone);
   $('#ePos').textContent=t(tk.pos); $('#eMean').textContent=tk.m[gl]; $('#eNote').textContent=tk.n[gl]||'';
-  $('#aiText').textContent=LINES[idx].ai[gl]; aiBox.dataset.open='false';
+  $('#aiText').textContent=LINES[idx].ai[gl]; aiBox.dataset.open='false'; $('#aiBox').style.display='';
   const sBtn=$('#saveBtn'); sBtn.classList.toggle('saved',saved.has(tk.th)); sBtn.textContent=saved.has(tk.th)?t('saved'):t('save');
   $('#entryEmpty').hidden=true; $('#entryContent').hidden=false;
 }
 $('#aiBtn').onclick=()=>{ aiBox.dataset.open=aiBox.dataset.open==='true'?'false':'true'; };
-$('#saveBtn').onclick=()=>{ if(current==null) return; const key=LINES[idx].tokens[current].th,sBtn=$('#saveBtn');
+$('#saveBtn').onclick=()=>{ if(!currentWord) return; const key=currentWord,sBtn=$('#saveBtn');
   if(saved.has(key)){ saved.delete(key); sBtn.classList.remove('saved'); sBtn.textContent=t('save'); } else { saved.add(key); sBtn.classList.add('saved'); sBtn.textContent=t('saved'); }
   $('#savedCount').textContent=saved.size; persist(); };
-$('#dictBtn').onclick=()=>{ const tk=LINES[idx].tokens[current],gl=glossLang(); $('#eNote').textContent=(tk.n[gl]?tk.n[gl]+'  ':'')+t('dict_note'); };
-$('#speakBtn').onclick=()=>{ if(current==null) return; try{ const u=new SpeechSynthesisUtterance(LINES[idx].tokens[current].th); u.lang='th-TH'; u.rate=.85; const v=speechSynthesis.getVoices().find(v=>/th/i.test(v.lang)); if(v) u.voice=v; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} };
+$('#dictBtn').onclick=()=>{ if(current==null) return; const tk=LINES[idx].tokens[current],gl=glossLang(); $('#eNote').textContent=(tk.n[gl]?tk.n[gl]+'  ':'')+t('dict_note'); };
+$('#speakBtn').onclick=()=>{ if(!currentWord) return; try{ const u=new SpeechSynthesisUtterance(currentWord); u.lang='th-TH'; u.rate=.85; const v=speechSynthesis.getVoices().find(v=>/th/i.test(v.lang)); if(v) u.voice=v; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){} };
 
 /* ---------------- controls ---------------- */
 $('#breakBtn').onclick=e=>{ breaks=!breaks; e.currentTarget.setAttribute('aria-pressed',breaks); lineEl.classList.toggle('reveal',breaks); $('#hintText').textContent=breaks?t('hint_on'):t('hint_off'); };
-$('#nextBtn').onclick=()=>{ idx=(idx+1)%LINES.length; clearEntry(); renderLine(); seekToLine(); };
-$('#prevBtn').onclick=()=>{ idx=(idx-1+LINES.length)%LINES.length; clearEntry(); renderLine(); seekToLine(); };
+$('#nextBtn').onclick=()=>{ if(mode==='live'&&live){ liveIdx=(liveIdx+1)%live.lines.length; clearEntry(); renderLive(); try{ if(player&&player.seekTo) player.seekTo(live.lines[liveIdx].start,true); }catch(e){} return; } idx=(idx+1)%LINES.length; clearEntry(); renderLine(); seekToLine(); };
+$('#prevBtn').onclick=()=>{ if(mode==='live'&&live){ liveIdx=(liveIdx-1+live.lines.length)%live.lines.length; clearEntry(); renderLive(); try{ if(player&&player.seekTo) player.seekTo(live.lines[liveIdx].start,true); }catch(e){} return; } idx=(idx-1+LINES.length)%LINES.length; clearEntry(); renderLine(); seekToLine(); };
 $('#syncBtn').onclick=()=>{ if(playerMode!=='api'){ $('#hintText').textContent=t('sync_nosite'); return; }
   syncOn=!syncOn; updateSyncBtn(); $('#hintText').textContent = syncOn?t('sync_note'):(breaks?t('hint_on'):t('hint_off')); if(syncOn) seekToLine(); };
 $('#repeatBtn').onclick=()=>{ if(current!=null) $('#speakBtn').click(); };

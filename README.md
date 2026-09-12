@@ -22,15 +22,24 @@ de verdad.
   significado, explicación IA de ejemplo, guardar, audio TTS).
 - **Tema claro/oscuro** según preferencia del sistema, con conmutador manual.
 
-### Simulado todavía (siguiente fase = backend)
-- Segmentación real de palabras deducida por contexto (PyThaiNLP / deepcut + IA).
-- Diccionario real (Lexitron + Wiktionary) enriquecido con IA.
-- Subtítulos automáticos por IA (Whisper) con caché para vídeos sin subtítulos.
+### Motor de subtítulos (backend)
+`netlify/functions/subtitles.mjs` es una función serverless que, dado un ID de
+vídeo, devuelve sus subtítulos tailandeses con tiempos. El front-end los segmenta
+en palabras con `Intl.Segmenter('th')` y los muestra **en directo, sincronizados**
+en la caja "Línea actual" (los subtítulos de YouTube quedan ocultos en el vídeo).
+
+### Simulado / pendiente
+- Diccionario real (Lexitron + Wiktionary) enriquecido con IA → significado al tocar.
+- Subtítulos por IA (Whisper) con caché para vídeos sin subtítulos.
 - Catálogo real vía API de datos de YouTube (solo tailandés).
 
-## Publicar en la web (GitHub Pages)
-1. En GitHub → **Settings → Pages**.
-2. En *Build and deployment* → *Source*: **Deploy from a branch**.
-3. Elige la rama y la carpeta **/ (root)**, y guarda.
-4. En un minuto tendrás una URL pública (`https://<usuario>.github.io/language-thai-app/`)
-   que abre `index.html` con reproducción real, ideal para el iPhone en Safari.
+## Publicar en la web (Netlify — recomendado, con backend)
+La web + la función se despliegan juntas:
+1. Crea una cuenta gratis en netlify.com y pulsa **Add new site → Import an existing project**.
+2. Conecta **GitHub** y elige el repo `language-thai-app` (rama `main`).
+3. Deja los valores por defecto (ya hay `netlify.toml`) y **Deploy**.
+4. Tendrás una URL `https://<algo>.netlify.app` con reproducción real **y** el motor
+   de subtítulos activo en `/.netlify/functions/subtitles`.
+
+> GitHub Pages también sirve la web (Settings → Pages → rama `main` → `/root`),
+> pero **no** ejecuta la función de subtítulos; para la sincronización real usa Netlify.

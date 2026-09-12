@@ -1,0 +1,10 @@
+# Configuración de Netlify para Bai.
+# La web es estática (index.html en la raíz) y la función de subtítulos vive en
+# netlify/functions. Al conectar el repo a Netlify, se despliegan juntas.
+
+[build]
+  publish = "."
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
